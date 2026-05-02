@@ -33,7 +33,6 @@ export type DashboardMetric = {
   hint: string;
 };
 
-<<<<<<< HEAD
 export type BudgetColumnKey =
   | "item_code"
   | "description"
@@ -42,9 +41,6 @@ export type BudgetColumnKey =
   | "unit_price"
   | "partial_amount"
   | "category";
-=======
-export type BudgetColumnKey = "item_code" | "description" | "unit" | "base_quantity" | "unit_price" | "partial_amount" | "category";
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
 
 export type BudgetPreviewRow = {
   item_code?: string;
@@ -53,11 +49,8 @@ export type BudgetPreviewRow = {
   base_quantity: number;
   unit_price: number;
   partial_amount: number;
-<<<<<<< HEAD
   hierarchy_level?: number | null;
   parent_item_code?: string | null;
-=======
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
   category?: string;
 };
 
@@ -86,12 +79,8 @@ export function parseRichTextDocument(value: Json | null | undefined): RichTextD
 }
 
 export function stripHtml(value: string) {
-<<<<<<< HEAD
   return value
     .replace(/<[^>]*>/g, " ")
     .replace(/\s+/g, " ")
     .trim();
-=======
-  return value.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
 }

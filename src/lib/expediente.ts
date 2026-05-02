@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 // Cálculos puros para memoria valorizada, metrados y valorizaciones.
-=======
-// Cálculos puros para el Expediente Mensual de Supervisión.
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
 // Importable desde cliente y servidor (sin dependencias de Supabase).
 
 import type { BudgetItemRow } from "@/lib/domain";
@@ -58,10 +54,7 @@ export function computeLinePartial(line: Partial<MetradoLine>): number {
       .replace(/N/gi, String(n || 1));
     if (/^[\d+\-*/().\s]+$/.test(expr)) {
       try {
-<<<<<<< HEAD
-=======
         // eslint-disable-next-line no-new-func
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
         const result = Function(`"use strict";return (${expr})`)();
         if (typeof result === "number" && Number.isFinite(result)) return round(result, 4);
       } catch {
@@ -139,7 +132,6 @@ export function buildValuationTable(args: {
     });
 }
 
-<<<<<<< HEAD
 /**
  * Construye un set con los códigos que tienen al menos un descendiente
  * (es decir, otra fila cuyo código empieza con `code + "."`). Se usa para
@@ -199,22 +191,10 @@ export function totals(rows: ValuationItemSummary[]) {
         balance: acc.balance + (isLeaf ? r.amountBalance : 0),
       };
     },
-=======
-export function totals(rows: ValuationItemSummary[]) {
-  return rows.reduce(
-    (acc, r) => ({
-      base: acc.base + Number(r.item.partial_amount || r.item.base_quantity * r.item.unit_price || 0),
-      prev: acc.prev + r.amountPrev,
-      current: acc.current + r.amountCurrent,
-      accum: acc.accum + r.amountAccum,
-      balance: acc.balance + r.amountBalance,
-    }),
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
     { base: 0, prev: 0, current: 0, accum: 0, balance: 0 },
   );
 }
 
-<<<<<<< HEAD
 export type SummaryHierarchyRow = {
   key: string;
   code: string;
@@ -308,12 +288,4 @@ export function formatMoney(n: number, currency = "PEN") {
     currency,
     minimumFractionDigits: 2,
   }).format(n);
-=======
-export function formatNum(n: number, d = 2) {
-  return new Intl.NumberFormat("es-PE", { minimumFractionDigits: d, maximumFractionDigits: d }).format(n);
-}
-
-export function formatMoney(n: number, currency = "PEN") {
-  return new Intl.NumberFormat("es-PE", { style: "currency", currency, minimumFractionDigits: 2 }).format(n);
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
 }

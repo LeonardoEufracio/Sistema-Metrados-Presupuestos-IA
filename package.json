@@ -1,18 +1,4 @@
 {
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-  "name": "project-ledger",
-  "private": true,
-  "description": "Ejecuta los scripts desde la carpeta de la app o usa estos alias.",
-  "scripts": {
-    "dev": "npm run dev --prefix project-ledger-main",
-    "build": "npm run build --prefix project-ledger-main",
-    "lint": "npm run lint --prefix project-ledger-main",
-    "format": "npm run format --prefix project-ledger-main",
-    "preview": "npm run preview --prefix project-ledger-main"
-=======
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
   "name": "tanstack_start_ts",
   "private": true,
   "sideEffects": false,
@@ -21,10 +7,7 @@
     "dev": "vite dev",
     "build": "vite build",
     "build:dev": "vite build --mode development",
-<<<<<<< HEAD
     "start": "node .output/server/index.mjs",
-=======
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write ."
@@ -102,17 +85,13 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^15.15.0",
-<<<<<<< HEAD
     "nitro": "^3.0.260429-beta",
-=======
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
     "prettier": "^3.7.3",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.56.1",
     "vite": "^7.3.1"
-<<<<<<< HEAD
-=======
->>>>>>> 0e8c3ea778d1760eca83fb92a49f004bfd1a693b
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
+  },
+  "engines": {
+    "node": ">=22"
   }
 }

@@ -30,7 +30,6 @@ interface WorkspaceContextValue {
   workflowComments: WorkflowCommentRow[];
   profiles: ProfileRow[];
   userRoles: UserRoleRow[];
-<<<<<<< HEAD
   auditLogs: Array<{
     id: string;
     action: string;
@@ -38,9 +37,6 @@ interface WorkspaceContextValue {
     entity_type: string;
     actor_user_id: string | null;
   }>;
-=======
-  auditLogs: Array<{ id: string; action: string; created_at: string; entity_type: string; actor_user_id: string | null }>;
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
   refresh: () => Promise<void>;
 }
 
@@ -61,7 +57,6 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
   const [workflowComments, setWorkflowComments] = useState<WorkflowCommentRow[]>([]);
   const [profiles, setProfiles] = useState<ProfileRow[]>([]);
   const [userRoles, setUserRoles] = useState<UserRoleRow[]>([]);
-<<<<<<< HEAD
   const [auditLogs, setAuditLogs] = useState<
     Array<{
       id: string;
@@ -71,9 +66,6 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
       actor_user_id: string | null;
     }>
   >([]);
-=======
-  const [auditLogs, setAuditLogs] = useState<Array<{ id: string; action: string; created_at: string; entity_type: string; actor_user_id: string | null }>>([]);
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
 
   const refresh = async () => {
     if (!isAuthenticated || !user) {
@@ -82,7 +74,6 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
     }
 
     setRefreshing(true);
-<<<<<<< HEAD
     const projectQuery = supabase
       .from("projects")
       .select("*")
@@ -121,18 +112,6 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
       .select("id,action,created_at,entity_type,actor_user_id")
       .order("created_at", { ascending: false })
       .limit(20);
-=======
-    const projectQuery = supabase.from("projects").select("*").order("created_at", { ascending: false });
-    const importsQuery = supabase.from("budget_imports").select("*").order("created_at", { ascending: false });
-    const itemsQuery = supabase.from("budget_items").select("*").order("sort_order", { ascending: true });
-    const metradosQuery = supabase.from("metrado_entries").select("*").order("entry_date", { ascending: false });
-    const memoriasQuery = supabase.from("memoria_valorizada").select("*").order("period_month", { ascending: false });
-    const valuationsQuery = supabase.from("valuations").select("*").order("period_month", { ascending: false });
-    const valuationLinesQuery = supabase.from("valuation_lines").select("*");
-    const liquidationsQuery = supabase.from("liquidations").select("*").order("created_at", { ascending: false });
-    const commentsQuery = supabase.from("workflow_comments").select("*").order("created_at", { ascending: false });
-    const auditQuery = supabase.from("audit_logs").select("id,action,created_at,entity_type,actor_user_id").order("created_at", { ascending: false }).limit(20);
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
 
     const profileQuery = isAdmin
       ? supabase.from("profiles").select("*").order("created_at", { ascending: false })

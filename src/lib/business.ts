@@ -53,10 +53,7 @@ export const projectStatusLabels = {
   closing: "En cierre",
   closed: "Cerrada",
   archived: "Archivada",
-<<<<<<< HEAD
   cancelled: "Cancelada",
-=======
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
 } as const;
 
 export function formatCurrency(value: number, currency = "PEN") {
@@ -106,13 +103,9 @@ export function getPeriodLabel(value: string) {
 }
 
 export function calculateProjectProgress(project: ProjectRow, valuations: ValuationRow[]) {
-<<<<<<< HEAD
   const approved = valuations.filter(
     (valuation) => valuation.project_id === project.id && valuation.status === "approved",
   );
-=======
-  const approved = valuations.filter((valuation) => valuation.project_id === project.id && valuation.status === "approved");
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
   if (!approved.length) return Number(project.progress_percent || 0);
 
   if (project.contract_type === "suma_alzada") {
@@ -144,15 +137,10 @@ export function calculateValuationFromData(args: {
   }
 
   const grossAmount = items.reduce((sum, item) => {
-<<<<<<< HEAD
     const quantity =
       "quantity" in item ? Number(item.quantity || 0) : Number(item.quantity_period || 0);
     const unitPrice =
       "unit_price" in item ? Number(item.unit_price || 0) : Number(item.unit_price_applied || 0);
-=======
-    const quantity = "quantity" in item ? Number(item.quantity || 0) : Number(item.quantity_period || 0);
-    const unitPrice = "unit_price" in item ? Number(item.unit_price || 0) : Number(item.unit_price_applied || 0);
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
     return sum + quantity * unitPrice;
   }, 0);
 
@@ -168,7 +156,6 @@ export function calculateValuationFromData(args: {
   };
 }
 
-<<<<<<< HEAD
 export function buildDashboardMetrics(
   projects: ProjectRow[],
   valuations: ValuationRow[],
@@ -180,12 +167,6 @@ export function buildDashboardMetrics(
     (sum, valuation) => sum + Number(valuation.net_amount || 0),
     0,
   );
-=======
-export function buildDashboardMetrics(projects: ProjectRow[], valuations: ValuationRow[], memorias: MemoriaRow[]): DashboardMetric[] {
-  const approvedValuations = valuations.filter((valuation) => valuation.status === "approved");
-  const approvedMemorias = memorias.filter((memoria) => memoria.status === "approved");
-  const totalNet = approvedValuations.reduce((sum, valuation) => sum + Number(valuation.net_amount || 0), 0);
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
 
   return [
     {
@@ -266,7 +247,6 @@ function parseBudgetNumber(value: unknown) {
   return Number.isFinite(parsed) ? parsed : 0;
 }
 
-<<<<<<< HEAD
 function getBudgetHierarchyMeta(itemCode: string) {
   const code = itemCode.trim();
   if (!code) return { hierarchy_level: null, parent_item_code: null };
@@ -278,24 +258,18 @@ function getBudgetHierarchyMeta(itemCode: string) {
   };
 }
 
-=======
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
 function matchesBudgetAlias(cell: string, alias: string) {
   if (!cell || !alias) return false;
 
   const compactCell = cell.replace(/\s+/g, "");
   const compactAlias = alias.replace(/\s+/g, "");
 
-<<<<<<< HEAD
   return (
     cell === alias ||
     compactCell === compactAlias ||
     cell.includes(alias) ||
     compactCell.includes(compactAlias)
   );
-=======
-  return cell === alias || compactCell === compactAlias || cell.includes(alias) || compactCell.includes(compactAlias);
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
 }
 
 type BudgetHeaderMatch = {
@@ -305,14 +279,10 @@ type BudgetHeaderMatch = {
   mapping: Partial<Record<BudgetColumnKey, { index: number; label: string }>>;
 };
 
-<<<<<<< HEAD
 function detectBudgetHeader(
   rows: unknown[][],
   synonyms: Record<string, string[]>,
 ): BudgetHeaderMatch | null {
-=======
-function detectBudgetHeader(rows: unknown[][], synonyms: Record<string, string[]>): BudgetHeaderMatch | null {
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
   const requiredFields: BudgetColumnKey[] = ["description", "unit", "base_quantity", "unit_price"];
   let bestMatch: BudgetHeaderMatch | null = null;
 
@@ -325,21 +295,15 @@ function detectBudgetHeader(rows: unknown[][], synonyms: Record<string, string[]
       { headerDepth: 1, cells: currentRow.map((cell) => String(cell ?? "").trim()) },
       {
         headerDepth: 2,
-<<<<<<< HEAD
         cells: Array.from(
           { length: Math.max(currentRow.length, nextRow.length) },
           (_, columnIndex) =>
             [currentRow[columnIndex], nextRow[columnIndex]].filter(Boolean).join(" ").trim(),
-=======
-        cells: Array.from({ length: Math.max(currentRow.length, nextRow.length) }, (_, columnIndex) =>
-          [currentRow[columnIndex], nextRow[columnIndex]].filter(Boolean).join(" ").trim(),
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
         ),
       },
     ];
 
     candidates.forEach(({ headerDepth, cells }) => {
-<<<<<<< HEAD
       const mapping = Object.entries(synonyms).reduce<
         Partial<Record<BudgetColumnKey, { index: number; label: string }>>
       >((accumulator, [field, aliases]) => {
@@ -348,12 +312,6 @@ function detectBudgetHeader(rows: unknown[][], synonyms: Record<string, string[]
           return aliases.some((alias) =>
             matchesBudgetAlias(normalizedCell, normalizeHeader(alias)),
           );
-=======
-      const mapping = Object.entries(synonyms).reduce<Partial<Record<BudgetColumnKey, { index: number; label: string }>>>((accumulator, [field, aliases]) => {
-        const matchIndex = cells.findIndex((cell) => {
-          const normalizedCell = normalizeBudgetCell(cell);
-          return aliases.some((alias) => matchesBudgetAlias(normalizedCell, normalizeHeader(alias)));
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
         });
 
         if (matchIndex >= 0) {
@@ -368,15 +326,11 @@ function detectBudgetHeader(rows: unknown[][], synonyms: Record<string, string[]
 
       if (requiredMatches < 3 || score === 0) return;
 
-<<<<<<< HEAD
       if (
         !bestMatch ||
         score > bestMatch.score ||
         (score === bestMatch.score && headerDepth < bestMatch.headerDepth)
       ) {
-=======
-      if (!bestMatch || score > bestMatch.score || (score === bestMatch.score && headerDepth < bestMatch.headerDepth)) {
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
         bestMatch = { rowIndex, headerDepth, score, mapping };
       }
     });
@@ -403,7 +357,6 @@ export function detectBudgetWorkbook(file: File): Promise<BudgetDetectionResult>
         const warnings: string[] = [];
 
         const synonyms: Record<string, string[]> = {
-<<<<<<< HEAD
           item_code: [
             "item",
             "item codigo",
@@ -414,9 +367,6 @@ export function detectBudgetWorkbook(file: File): Promise<BudgetDetectionResult>
             "item partida",
             "partida",
           ],
-=======
-          item_code: ["item", "item codigo", "item / item / codigo", "codigo", "codigo partida", "cod partida", "item partida", "partida"],
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
           description: ["descripcion", "descripcion partida", "detalle", "concepto"],
           unit: ["und", "und.", "unidad", "u m", "u.m.", "um"],
           base_quantity: ["metrado", "cantidad", "cantidad base", "metrados"],
@@ -431,13 +381,9 @@ export function detectBudgetWorkbook(file: File): Promise<BudgetDetectionResult>
           resolve({
             mapping,
             rows: [],
-<<<<<<< HEAD
             warnings: [
               "No se encontró una tabla válida del presupuesto. Verifica que el archivo tenga encabezados reconocibles como descripción, unidad, metrado y precio unitario.",
             ],
-=======
-            warnings: ["No se encontró una tabla válida del presupuesto. Verifica que el archivo tenga encabezados reconocibles como descripción, unidad, metrado y precio unitario."],
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
           });
           return;
         }
@@ -450,7 +396,6 @@ export function detectBudgetWorkbook(file: File): Promise<BudgetDetectionResult>
           }
         });
 
-<<<<<<< HEAD
         if (!mapping.description)
           warnings.push("No se detectó automáticamente la columna de descripción.");
         if (!mapping.unit) warnings.push("No se detectó automáticamente la columna de unidad.");
@@ -458,12 +403,6 @@ export function detectBudgetWorkbook(file: File): Promise<BudgetDetectionResult>
           warnings.push("No se detectó automáticamente la columna de metrado base.");
         if (!mapping.unit_price)
           warnings.push("No se detectó automáticamente la columna de precio unitario.");
-=======
-        if (!mapping.description) warnings.push("No se detectó automáticamente la columna de descripción.");
-        if (!mapping.unit) warnings.push("No se detectó automáticamente la columna de unidad.");
-        if (!mapping.base_quantity) warnings.push("No se detectó automáticamente la columna de metrado base.");
-        if (!mapping.unit_price) warnings.push("No se detectó automáticamente la columna de precio unitario.");
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
 
         const dataRows = sheetRows.slice(headerMatch.rowIndex + headerMatch.headerDepth);
 
@@ -477,7 +416,6 @@ export function detectBudgetWorkbook(file: File): Promise<BudgetDetectionResult>
           const unit = String(getValue("unit") ?? "").trim();
           const baseQuantity = parseBudgetNumber(getValue("base_quantity"));
           const unitPrice = parseBudgetNumber(getValue("unit_price"));
-<<<<<<< HEAD
           const partialAmount =
             parseBudgetNumber(getValue("partial_amount")) || baseQuantity * unitPrice;
           const itemCode = String(getValue("item_code") ?? "").trim();
@@ -508,28 +446,6 @@ export function detectBudgetWorkbook(file: File): Promise<BudgetDetectionResult>
           warnings.push(
             "Se detectaron encabezados, pero no se encontraron filas válidas de partidas debajo de la tabla.",
           );
-=======
-          const partialAmount = parseBudgetNumber(getValue("partial_amount")) || baseQuantity * unitPrice;
-          const itemCode = String(getValue("item_code") ?? "").trim();
-          const category = String(getValue("category") ?? "").trim();
-
-          if (!description || !unit) return [];
-          if (!/[a-z0-9]/i.test(description)) return [];
-
-          return [{
-            item_code: itemCode || undefined,
-            description,
-            unit,
-            base_quantity: baseQuantity,
-            unit_price: unitPrice,
-            partial_amount: partialAmount,
-            category: category || undefined,
-          }];
-        });
-
-        if (!parsedRows.length) {
-          warnings.push("Se detectaron encabezados, pero no se encontraron filas válidas de partidas debajo de la tabla.");
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
         }
 
         resolve({ mapping, rows: parsedRows, warnings });
@@ -551,23 +467,6 @@ export function downloadWorkbook(name: string, sheets: Record<string, Record<str
   XLSX.writeFile(workbook, `${name}.xlsx`);
 }
 
-<<<<<<< HEAD
-export function exportMetradosWorkbook(
-  project: ProjectRow,
-  metrados: MetradoEntryRow[],
-  items: { [key: string]: string },
-) {
-  downloadWorkbook(`metrados-${project.code}`, {
-    Metrados: metrados.map((entry) => ({
-      Fecha: formatDate(entry.entry_date),
-      Periodo: getPeriodLabel(entry.period_month),
-      Partida: items[entry.item_id] || entry.item_id,
-      Cantidad: Number(entry.quantity),
-      Estado: entry.status,
-      Observaciones: entry.notes || "",
-    })),
-  });
-=======
 export function exportMetradosWorkbook(project: ProjectRow, metrados: MetradoEntryRow[], items: { [key: string]: string }) {
   downloadWorkbook(`metrados-${project.code}`,
     {
@@ -581,7 +480,6 @@ export function exportMetradosWorkbook(project: ProjectRow, metrados: MetradoEnt
       })),
     },
   );
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
 }
 
 export function exportFinancialWorkbook(projects: ProjectRow[], valuations: ValuationRow[]) {
@@ -615,27 +513,19 @@ export function exportMemoriaPdf(project: ProjectRow, memoria: MemoriaRow) {
   doc.text(`Periodo: ${getPeriodLabel(memoria.period_month)}`, 14, 35);
   doc.text(`Estado: ${documentStatusLabels[memoria.status]}`, 14, 42);
 
-<<<<<<< HEAD
   const lines = doc.splitTextToSize(
     stripHtml(content.html || content.plainText || memoria.executive_summary || "Sin contenido"),
     180,
   );
-=======
-  const lines = doc.splitTextToSize(stripHtml(content.html || content.plainText || memoria.executive_summary || "Sin contenido"), 180);
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
   doc.text(lines, 14, 54);
   doc.save(`memoria-${project.code}-${memoria.period_month}.pdf`);
 }
 
-<<<<<<< HEAD
 export function exportValuationPdf(
   project: ProjectRow,
   valuation: ValuationRow,
   lines: ValuationLineRow[],
 ) {
-=======
-export function exportValuationPdf(project: ProjectRow, valuation: ValuationRow, lines: ValuationLineRow[]) {
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
   const doc = new jsPDF();
   doc.setFontSize(18);
   doc.text("Reporte de valorización", 14, 18);
@@ -666,21 +556,16 @@ export function exportValuationPdf(project: ProjectRow, valuation: ValuationRow,
   doc.save(`valorizacion-${project.code}-${valuation.period_month}.pdf`);
 }
 
-<<<<<<< HEAD
 export function exportLiquidationPdf(
   project: ProjectRow,
   liquidation: LiquidationRow,
   valuations: ValuationRow[],
 ) {
-=======
-export function exportLiquidationPdf(project: ProjectRow, liquidation: LiquidationRow, valuations: ValuationRow[]) {
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
   const doc = new jsPDF();
   doc.setFontSize(18);
   doc.text("Liquidación de obra", 14, 18);
   doc.setFontSize(11);
   doc.text(`Proyecto: ${project.name}`, 14, 28);
-<<<<<<< HEAD
   doc.text(
     `Total valorizado: ${formatCurrency(Number(liquidation.total_valued_amount), project.currency_code)}`,
     14,
@@ -696,11 +581,6 @@ export function exportLiquidationPdf(project: ProjectRow, liquidation: Liquidati
     14,
     52,
   );
-=======
-  doc.text(`Total valorizado: ${formatCurrency(Number(liquidation.total_valued_amount), project.currency_code)}`, 14, 36);
-  doc.text(`Deducciones: ${formatCurrency(Number(liquidation.total_deductions_amount), project.currency_code)}`, 14, 44);
-  doc.text(`Monto final: ${formatCurrency(Number(liquidation.final_amount), project.currency_code)}`, 14, 52);
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
 
   autoTable(doc, {
     startY: 62,
@@ -717,7 +597,6 @@ export function exportLiquidationPdf(project: ProjectRow, liquidation: Liquidati
   doc.save(`liquidacion-${project.code}.pdf`);
 }
 
-<<<<<<< HEAD
 export function buildAuditSummary(
   rows: Array<{
     action: string;
@@ -726,9 +605,6 @@ export function buildAuditSummary(
     actor_user_id: string | null;
   }>,
 ): AuditSummary[] {
-=======
-export function buildAuditSummary(rows: Array<{ action: string; created_at: string; entity_type: string; actor_user_id: string | null }>): AuditSummary[] {
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
   return rows.slice(0, 8).map((row) => ({
     action: row.action,
     actor: row.actor_user_id ? row.actor_user_id.slice(0, 8) : "Sistema",

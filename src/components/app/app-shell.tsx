@@ -8,6 +8,7 @@ import {
   FolderKanban,
   Gauge,
   HardHat,
+  Home,
   Settings,
   ShieldCheck,
   Users,
@@ -37,11 +38,7 @@ import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/lib/auth";
 import { roleLabels } from "@/lib/business";
 import { WorkspaceProvider } from "@/components/app/workspace-provider";
-<<<<<<< HEAD
 import { ThemeToggle } from "@/components/app/theme-toggle";
-import { Home } from "lucide-react";
-=======
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
 
 const menuGroups = [
   {
@@ -50,14 +47,9 @@ const menuGroups = [
       { title: "Dashboard", to: "/app/dashboard", icon: Gauge },
       { title: "Proyectos", to: "/app/projects", icon: FolderKanban },
       { title: "Presupuestos", to: "/app/budgets", icon: FileSpreadsheet },
-<<<<<<< HEAD
       { title: "Memoria valorizada e Informe Técnico", to: "/app/expediente", icon: FileStack },
       { title: "Metrados", to: "/app/metrados", icon: HardHat },
-=======
-      { title: "Expediente Mensual", to: "/app/expediente", icon: FileStack },
-      { title: "Metrados", to: "/app/metrados", icon: HardHat },
       { title: "Memoria valorizada", to: "/app/memorias", icon: FileText },
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
       { title: "Valorizaciones", to: "/app/valuations", icon: WalletCards },
       { title: "Aprobaciones", to: "/app/approvals", icon: ClipboardCheck },
     ],
@@ -89,17 +81,12 @@ function AppSidebar() {
           </div>
           {!collapsed && (
             <div className="min-w-0">
-<<<<<<< HEAD
               <p className="truncate text-sm font-semibold text-sidebar-foreground">
                 JJ&PP Ingenieros
               </p>
               <p className="truncate text-xs text-sidebar-foreground/70">
                 Gestión de metrados y valorizaciones
               </p>
-=======
-              <p className="truncate text-sm font-semibold text-sidebar-foreground">JJ&PP Ingenieros</p>
-              <p className="truncate text-xs text-sidebar-foreground/70">Gestión de metrados y valorizaciones</p>
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
             </div>
           )}
         </div>
@@ -134,7 +121,6 @@ function AppSidebar() {
       <SidebarFooter className="px-3 py-4">
         {!collapsed && (
           <div className="space-y-1">
-<<<<<<< HEAD
             <p className="truncate text-sm font-medium text-sidebar-foreground">
               {profile?.full_name || "Usuario"}
             </p>
@@ -145,12 +131,6 @@ function AppSidebar() {
                   variant="outline"
                   className="border-sidebar-border bg-sidebar-accent text-[11px] text-sidebar-accent-foreground"
                 >
-=======
-            <p className="truncate text-sm font-medium text-sidebar-foreground">{profile?.full_name || "Usuario"}</p>
-            <div className="flex flex-wrap gap-1">
-              {roles.map((role) => (
-                <Badge key={role} variant="outline" className="border-sidebar-border bg-sidebar-accent text-[11px] text-sidebar-accent-foreground">
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
                   {roleLabels[role]}
                 </Badge>
               ))}
@@ -183,7 +163,6 @@ function AppTopbar() {
                 </span>
               ))}
             </nav>
-<<<<<<< HEAD
             <p className="truncate text-sm font-medium text-foreground">
               {profile?.job_title || "Plataforma de control de obra"}
             </p>
@@ -197,12 +176,6 @@ function AppTopbar() {
             </Link>
           </Button>
           <ThemeToggle />
-=======
-            <p className="truncate text-sm font-medium text-foreground">{profile?.job_title || "Plataforma de control de obra"}</p>
-          </div>
-        </div>
-        <div className="flex items-center gap-2">
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
           <Button variant="outline" onClick={() => void signOut()}>
             Cerrar sesión
           </Button>
@@ -217,15 +190,9 @@ export function AppShell() {
     <WorkspaceProvider>
       <SidebarProvider defaultOpen>
         <AppSidebar />
-<<<<<<< HEAD
         <SidebarInset className="min-w-0 overflow-x-hidden">
           <AppTopbar />
           <div className="min-w-0 flex-1 px-4 py-6 md:px-6">
-=======
-        <SidebarInset>
-          <AppTopbar />
-          <div className="flex-1 px-4 py-6 md:px-6">
->>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
             <Outlet />
           </div>
         </SidebarInset>
