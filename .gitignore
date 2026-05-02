@@ -11,7 +11,10 @@ node_modules
 dist
 dist-ssr
 .output
+<<<<<<< HEAD
 .vercel
+=======
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
 .vinxi
 .tanstack/**
 .nitro

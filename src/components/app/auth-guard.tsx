@@ -4,6 +4,7 @@ import { ShieldAlert } from "lucide-react";
 
 import { useAuth } from "@/lib/auth";
 
+<<<<<<< HEAD
 export function AuthGuard({
   children,
   requireAdmin = false,
@@ -11,6 +12,9 @@ export function AuthGuard({
   children: React.ReactNode;
   requireAdmin?: boolean;
 }) {
+=======
+export function AuthGuard({ children, requireAdmin = false }: { children: React.ReactNode; requireAdmin?: boolean }) {
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
   const navigate = useNavigate();
   const { loading, isAuthenticated, isAdmin } = useAuth();
 

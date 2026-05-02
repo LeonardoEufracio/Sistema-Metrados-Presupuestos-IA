@@ -3,8 +3,11 @@ import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/r
 
 import appCss from "../styles.css?url";
 import { AuthProvider } from "@/lib/auth";
+<<<<<<< HEAD
 import { ThemeProvider } from "@/lib/theme";
 import { Toaster } from "@/components/ui/sonner";
+=======
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
 
 function NotFoundComponent() {
   return (
@@ -32,6 +35,7 @@ export const Route = createRootRoute({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
+<<<<<<< HEAD
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "JJ&PP Ingenieros | Gestión de obras" },
       {
@@ -45,6 +49,13 @@ export const Route = createRootRoute({
         content:
           "Control mensual de metrados, memoria valorizada, valorizaciones y liquidación final.",
       },
+=======
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
+        { title: "JJ&PP Ingenieros | Gestión de obras" },
+        { name: "description", content: "Sistema web para gestionar metrados, valorizaciones mensuales y liquidación de obras de ingeniería civil." },
+        { property: "og:title", content: "JJ&PP Ingenieros | Gestión de obras" },
+        { property: "og:description", content: "Control mensual de metrados, memoria valorizada, valorizaciones y liquidación final." },
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -76,11 +87,17 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   return (
+<<<<<<< HEAD
     <ThemeProvider>
       <AuthProvider>
         <Outlet />
         <Toaster position="top-right" richColors />
       </AuthProvider>
     </ThemeProvider>
+=======
+    <AuthProvider>
+      <Outlet />
+    </AuthProvider>
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
   );
 }

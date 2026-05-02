@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
@@ -7,13 +8,23 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "sonner";
+=======
+import { useMemo, useState } from "react";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
 
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { useWorkspace } from "@/components/app/workspace-provider";
 import { PageLayout } from "@/components/app/page-layout";
 import { RichTextEditor } from "@/components/app/rich-text-editor";
+<<<<<<< HEAD
 import { AIDraftDialog } from "@/components/app/ai-draft-dialog";
+=======
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
 import {
   buildAuditSummary,
   buildDashboardMetrics,
@@ -36,12 +47,17 @@ import {
   toPeriodDate,
   valuationStatusLabels,
 } from "@/lib/business";
+<<<<<<< HEAD
 import { parseRichTextDocument, stripHtml, type BudgetItemRow } from "@/lib/domain";
 import { buildParentCodeSet, isLeafByCode, type MetradoLine } from "@/lib/expediente";
+=======
+import { parseRichTextDocument, stripHtml } from "@/lib/domain";
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
 import { AuthGuard } from "@/components/app/auth-guard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+<<<<<<< HEAD
 import {
   Dialog,
   DialogContent,
@@ -76,6 +92,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+=======
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
 import { Textarea } from "@/components/ui/textarea";
 
 const projectSchema = z.object({
@@ -91,6 +114,7 @@ const projectSchema = z.object({
   start_date: z.string().optional(),
 });
 
+<<<<<<< HEAD
 const fichaTecnicaSchema = z
   .object({
     entity_name: z.string().trim().max(180).optional(),
@@ -131,6 +155,23 @@ const fichaTecnicaSchema = z
       }
     }
   });
+=======
+const fichaTecnicaSchema = z.object({
+  entity_name: z.string().trim().max(180).optional(),
+  contractor_name: z.string().trim().max(180).optional(),
+  supervisor_name: z.string().trim().max(180).optional(),
+  resident_name: z.string().trim().max(180).optional(),
+  execution_modality: z.string().trim().max(120).optional(),
+  location: z.string().trim().max(180).optional(),
+  execution_contract: z.string().trim().max(180).optional(),
+  supervision_contract: z.string().trim().max(180).optional(),
+  contract_amount: z.coerce.number().min(0),
+  start_date: z.string().optional(),
+  execution_term_days: z.coerce.number().int().min(0).optional(),
+  planned_end_date: z.string().optional(),
+  status: z.enum(["draft", "active", "closing", "closed", "archived"]),
+});
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
 
 const metradoSchema = z.object({
   project_id: z.string().uuid(),
@@ -170,14 +211,22 @@ const settingsSchema = z.object({
 
 function SectionTable({ headers, rows }: { headers: string[]; rows: React.ReactNode[][] }) {
   return (
+<<<<<<< HEAD
     <div className="w-full max-w-full overflow-x-auto rounded-lg border border-border bg-card">
+=======
+    <div className="overflow-hidden rounded-lg border border-border bg-card">
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
       <Table>
         <TableHeader>
           <TableRow>
             {headers.map((header) => (
+<<<<<<< HEAD
               <TableHead key={header} className="whitespace-nowrap">
                 {header}
               </TableHead>
+=======
+              <TableHead key={header}>{header}</TableHead>
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
             ))}
           </TableRow>
         </TableHeader>
@@ -185,9 +234,13 @@ function SectionTable({ headers, rows }: { headers: string[]; rows: React.ReactN
           {rows.map((row, index) => (
             <TableRow key={index}>
               {row.map((cell, cellIndex) => (
+<<<<<<< HEAD
                 <TableCell key={cellIndex} className="align-top">
                   {cell}
                 </TableCell>
+=======
+                <TableCell key={cellIndex}>{cell}</TableCell>
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
               ))}
             </TableRow>
           ))}
@@ -197,6 +250,7 @@ function SectionTable({ headers, rows }: { headers: string[]; rows: React.ReactN
   );
 }
 
+<<<<<<< HEAD
 function ScrollableImportTable({
   headers,
   rows,
@@ -320,6 +374,8 @@ function renderBudgetDescription(item: BudgetHierarchyItem) {
   );
 }
 
+=======
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
 export function LoginPage() {
   const navigate = useNavigate();
   const { signIn, signUp, isAuthenticated, loading } = useAuth();
@@ -344,9 +400,13 @@ export function LoginPage() {
       return "La contraseña es demasiado débil. Usa una más segura y difícil de adivinar.";
     }
 
+<<<<<<< HEAD
     return submitError instanceof Error
       ? submitError.message
       : "No se pudo completar la operación.";
+=======
+    return submitError instanceof Error ? submitError.message : "No se pudo completar la operación.";
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
   };
 
   if (!loading && isAuthenticated) {
@@ -375,6 +435,7 @@ export function LoginPage() {
   };
 
   return (
+<<<<<<< HEAD
     <div className="relative min-h-screen w-full overflow-hidden bg-background">
       {/* Top-right controls */}
       <div className="absolute right-4 top-4 z-10 flex items-center gap-2">
@@ -526,6 +587,75 @@ export function LoginPage() {
           © {new Date().getFullYear()} JJ&amp;PP Ingenieros · Plataforma de gestión de obras
         </p>
       </div>
+=======
+    <div className="grid min-h-[calc(100vh-6rem)] gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+      <section className="space-y-6">
+        <Badge variant="outline">Sistema web de ingeniería civil</Badge>
+        <div className="space-y-4">
+          <h1 className="max-w-3xl text-4xl font-semibold tracking-tight text-foreground">
+            Gestión integral de metrados, valorizaciones y liquidación de obras para JJ&amp;PP Ingenieros.
+          </h1>
+          <p className="max-w-2xl text-base text-muted-foreground">
+            Plataforma operativa para registrar metrados ejecutados, controlar memorias valorizadas, calcular valorizaciones mensuales y consolidar la liquidación final con trazabilidad completa.
+          </p>
+        </div>
+        <div className="grid gap-4 md:grid-cols-3">
+          {[
+            ["Control mensual", "Metrados, memoria valorizada y valorización enlazados por periodo."],
+            ["Trazabilidad", "Bitácora auditable de cambios, revisiones y aprobaciones."],
+            ["Documentos", "Exportación inicial a PDF y Excel desde el flujo operativo."],
+          ].map(([title, text]) => (
+            <Card key={title}>
+              <CardHeader>
+                <CardTitle className="text-base">{title}</CardTitle>
+                <CardDescription>{text}</CardDescription>
+              </CardHeader>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      <Card className="border-border/80 shadow-sm">
+        <CardHeader>
+          <CardTitle>{mode === "signin" ? "Ingresar al sistema" : "Crear acceso inicial"}</CardTitle>
+          <CardDescription>
+            {mode === "signin"
+              ? "Usa tu correo corporativo para entrar al panel operativo."
+              : "El primer usuario registrado recibirá el rol administrador automáticamente."}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form className="space-y-4" onSubmit={submit}>
+            {mode === "signup" ? (
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Nombre completo</label>
+                <Input value={form.fullName} onChange={(event) => setForm((current) => ({ ...current, fullName: event.target.value }))} required />
+              </div>
+            ) : null}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-foreground">Correo</label>
+              <Input type="email" value={form.email} onChange={(event) => setForm((current) => ({ ...current, email: event.target.value }))} required />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-foreground">Contraseña</label>
+              <Input type="password" value={form.password} onChange={(event) => setForm((current) => ({ ...current, password: event.target.value }))} required />
+            </div>
+            {notice ? <p className="text-sm text-muted-foreground">{notice}</p> : null}
+            {error ? <p className="text-sm text-destructive">{error}</p> : null}
+            <Button className="w-full" type="submit" disabled={busy}>
+              {busy ? "Procesando…" : mode === "signin" ? "Ingresar" : "Crear cuenta"}
+            </Button>
+            <Button className="w-full" type="button" variant="outline" onClick={() => {
+              setError(null);
+              setNotice(null);
+              setMode((current) => (current === "signin" ? "signup" : "signin"));
+            }}>
+              {mode === "signin" ? "Registrar primer acceso" : "Ya tengo cuenta"}
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
     </div>
   );
 }
@@ -533,6 +663,7 @@ export function LoginPage() {
 export function DashboardPage() {
   const { projects, valuations, memorias, auditLogs, loading } = useWorkspace();
 
+<<<<<<< HEAD
   const metrics = useMemo(
     () => buildDashboardMetrics(projects, valuations, memorias),
     [projects, valuations, memorias],
@@ -552,6 +683,16 @@ export function DashboardPage() {
         title="Dashboard"
         description="Visión ejecutiva del ciclo mensual de obra, desde metrados hasta valorizaciones aprobadas."
       >
+=======
+  const metrics = useMemo(() => buildDashboardMetrics(projects, valuations, memorias), [projects, valuations, memorias]);
+  const auditSummary = useMemo(() => buildAuditSummary(auditLogs), [auditLogs]);
+
+  if (loading) return <AuthGuard><div className="text-sm text-muted-foreground">Cargando dashboard…</div></AuthGuard>;
+
+  return (
+    <AuthGuard>
+      <PageLayout title="Dashboard" description="Visión ejecutiva del ciclo mensual de obra, desde metrados hasta valorizaciones aprobadas.">
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {metrics.map((metric) => (
             <Card key={metric.label}>
@@ -570,9 +711,13 @@ export function DashboardPage() {
           <Card>
             <CardHeader>
               <CardTitle>Estado de proyectos</CardTitle>
+<<<<<<< HEAD
               <CardDescription>
                 Seguimiento de avance, contrato y estado del flujo técnico-financiero.
               </CardDescription>
+=======
+              <CardDescription>Seguimiento de avance, contrato y estado del flujo técnico-financiero.</CardDescription>
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
             </CardHeader>
             <CardContent>
               <SectionTable
@@ -581,9 +726,13 @@ export function DashboardPage() {
                   project.code,
                   project.name,
                   contractTypeLabels[project.contract_type],
+<<<<<<< HEAD
                   <Badge key={project.id} variant="outline">
                     {projectStatusLabels[project.status]}
                   </Badge>,
+=======
+                  <Badge key={project.id} variant="outline">{projectStatusLabels[project.status]}</Badge>,
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
                   `${formatNumber(calculateProjectProgress(project, valuations))}%`,
                 ])}
               />
@@ -593,6 +742,7 @@ export function DashboardPage() {
           <Card>
             <CardHeader>
               <CardTitle>Trazabilidad reciente</CardTitle>
+<<<<<<< HEAD
               <CardDescription>
                 Eventos registrados por el sistema y los responsables.
               </CardDescription>
@@ -614,6 +764,18 @@ export function DashboardPage() {
               ) : (
                 <p className="text-sm text-muted-foreground">Aún no hay actividad registrada.</p>
               )}
+=======
+              <CardDescription>Eventos registrados por el sistema y los responsables.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {auditSummary.length ? auditSummary.map((item) => (
+                <div key={`${item.entity}-${item.timestamp}`} className="rounded-md border border-border p-3">
+                  <p className="text-sm font-medium text-foreground">{item.entity}</p>
+                  <p className="text-sm text-muted-foreground">{item.action} · {item.actor}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">{item.timestamp}</p>
+                </div>
+              )) : <p className="text-sm text-muted-foreground">Aún no hay actividad registrada.</p>}
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
             </CardContent>
           </Card>
         </div>
@@ -645,6 +807,7 @@ export function isFichaTecnicaIncomplete(project: EditableProject | undefined | 
   return false;
 }
 
+<<<<<<< HEAD
 type ProjectMovementCheck = {
   budget_imports: number;
   budget_items: number;
@@ -1010,6 +1173,9 @@ export function EditProjectDialog({
   triggerLabel?: string;
   triggerVariant?: "default" | "outline" | "secondary";
 }) {
+=======
+function EditProjectDialog({ project, onSaved }: { project: EditableProject; onSaved: () => Promise<void> | void }) {
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
   const [open, setOpen] = useState(false);
   const form = useForm<z.infer<typeof fichaTecnicaSchema>>({
     resolver: zodResolver(fichaTecnicaSchema),
@@ -1030,6 +1196,7 @@ export function EditProjectDialog({
     },
   });
 
+<<<<<<< HEAD
   // Sync execution_term_days <-> start_date / planned_end_date
   const startDate = form.watch("start_date");
   const endDate = form.watch("planned_end_date");
@@ -1062,6 +1229,8 @@ export function EditProjectDialog({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [termDays, startDate]);
 
+=======
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
   const submit = form.handleSubmit(async (values) => {
     const payload = {
       entity_name: values.entity_name || null,
@@ -1083,34 +1252,52 @@ export function EditProjectDialog({
       form.setError("root", { message: error.message });
       return;
     }
+<<<<<<< HEAD
     toast.success("Ficha técnica actualizada");
+=======
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
     setOpen(false);
     await onSaved();
   });
 
   const incomplete = isFichaTecnicaIncomplete(project);
+<<<<<<< HEAD
   const label = triggerLabel ?? (incomplete ? "Completar ficha técnica" : "Editar ficha técnica");
   const variant = triggerVariant ?? (incomplete ? "default" : "outline");
+=======
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
+<<<<<<< HEAD
         <Button size="sm" variant={variant}>
           {label}
+=======
+        <Button size="sm" variant={incomplete ? "default" : "outline"}>
+          {incomplete ? "Completar ficha técnica" : "Editar"}
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
         </Button>
       </DialogTrigger>
       <DialogContent className="max-h-[90vh] max-w-3xl overflow-y-auto">
         <DialogHeader>
+<<<<<<< HEAD
           <DialogTitle>Ficha técnica del proyecto</DialogTitle>
           <DialogDescription>
             Información obligatoria que aparecerá en el Expediente Mensual de
             Supervisión/Valorización. Los cambios se sincronizan entre Proyectos y Memoria
             valorizada e Informe Técnico.
+=======
+          <DialogTitle>Editar proyecto · Ficha técnica</DialogTitle>
+          <DialogDescription>
+            Información obligatoria que aparecerá en el Expediente Mensual de Supervisión/Valorización.
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form className="space-y-4" onSubmit={submit}>
             <div className="grid gap-4 md:grid-cols-2">
+<<<<<<< HEAD
               <FormField
                 control={form.control}
                 name="entity_name"
@@ -1352,6 +1539,60 @@ export function EditProjectDialog({
               <Button type="button" variant="outline" onClick={() => setOpen(false)}>
                 Cancelar
               </Button>
+=======
+              <FormField control={form.control} name="entity_name" render={({ field }) => (
+                <FormItem><FormLabel>Entidad *</FormLabel><FormControl><Input {...field} value={field.value ?? ""} placeholder="Municipalidad / Entidad contratante" /></FormControl><FormMessage /></FormItem>
+              )} />
+              <FormField control={form.control} name="contractor_name" render={({ field }) => (
+                <FormItem><FormLabel>Contratista *</FormLabel><FormControl><Input {...field} value={field.value ?? ""} /></FormControl><FormMessage /></FormItem>
+              )} />
+              <FormField control={form.control} name="supervisor_name" render={({ field }) => (
+                <FormItem><FormLabel>Supervisor *</FormLabel><FormControl><Input {...field} value={field.value ?? ""} /></FormControl><FormMessage /></FormItem>
+              )} />
+              <FormField control={form.control} name="resident_name" render={({ field }) => (
+                <FormItem><FormLabel>Residente *</FormLabel><FormControl><Input {...field} value={field.value ?? ""} /></FormControl><FormMessage /></FormItem>
+              )} />
+              <FormField control={form.control} name="execution_modality" render={({ field }) => (
+                <FormItem><FormLabel>Modalidad de ejecución *</FormLabel><FormControl><Input {...field} value={field.value ?? ""} placeholder="Contrata / Administración directa" /></FormControl><FormMessage /></FormItem>
+              )} />
+              <FormField control={form.control} name="location" render={({ field }) => (
+                <FormItem><FormLabel>Ubicación *</FormLabel><FormControl><Input {...field} value={field.value ?? ""} placeholder="Distrito, provincia, región" /></FormControl><FormMessage /></FormItem>
+              )} />
+              <FormField control={form.control} name="execution_contract" render={({ field }) => (
+                <FormItem><FormLabel>Contrato de ejecución *</FormLabel><FormControl><Input {...field} value={field.value ?? ""} placeholder="N° de contrato" /></FormControl><FormMessage /></FormItem>
+              )} />
+              <FormField control={form.control} name="supervision_contract" render={({ field }) => (
+                <FormItem><FormLabel>Contrato de supervisión *</FormLabel><FormControl><Input {...field} value={field.value ?? ""} placeholder="N° de contrato" /></FormControl><FormMessage /></FormItem>
+              )} />
+              <FormField control={form.control} name="contract_amount" render={({ field }) => (
+                <FormItem><FormLabel>Monto contractual *</FormLabel><FormControl><Input type="number" step="0.01" {...field} /></FormControl><FormMessage /></FormItem>
+              )} />
+              <FormField control={form.control} name="start_date" render={({ field }) => (
+                <FormItem><FormLabel>Fecha de inicio *</FormLabel><FormControl><Input type="date" {...field} value={field.value ?? ""} /></FormControl><FormMessage /></FormItem>
+              )} />
+              <FormField control={form.control} name="execution_term_days" render={({ field }) => (
+                <FormItem><FormLabel>Plazo de ejecución (días) *</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
+              )} />
+              <FormField control={form.control} name="planned_end_date" render={({ field }) => (
+                <FormItem><FormLabel>Fecha de término *</FormLabel><FormControl><Input type="date" {...field} value={field.value ?? ""} /></FormControl><FormMessage /></FormItem>
+              )} />
+              <FormField control={form.control} name="status" render={({ field }) => (
+                <FormItem><FormLabel>Estado del proyecto *</FormLabel>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <FormControl><SelectTrigger><SelectValue /></SelectTrigger></FormControl>
+                    <SelectContent>
+                      {Object.entries(projectStatusLabels).map(([value, label]) => (
+                        <SelectItem key={value} value={value}>{label}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select><FormMessage />
+                </FormItem>
+              )} />
+            </div>
+            {form.formState.errors.root ? <p className="text-sm text-destructive">{form.formState.errors.root.message}</p> : null}
+            <DialogFooter>
+              <Button type="button" variant="outline" onClick={() => setOpen(false)}>Cancelar</Button>
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
               <Button type="submit" disabled={form.formState.isSubmitting}>
                 {form.formState.isSubmitting ? "Guardando…" : "Guardar ficha técnica"}
               </Button>
@@ -1363,6 +1604,7 @@ export function EditProjectDialog({
   );
 }
 
+<<<<<<< HEAD
 /**
  * Panel reutilizable de Ficha técnica:
  * - Muestra los datos en modo lectura (grid).
@@ -1414,10 +1656,13 @@ function FichaDatoCell({ label, value }: { label: string; value: unknown }) {
   );
 }
 
+=======
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
 export function ProjectsPage() {
   const { projects, refresh } = useWorkspace();
   const { user, roles } = useAuth();
   const [open, setOpen] = useState(false);
+<<<<<<< HEAD
   const [purgedProjectIds, setPurgedProjectIds] = useState<Set<string>>(() => new Set());
   const visibleProjects = useMemo(
     () => projects.filter((project) => !purgedProjectIds.has(project.id)),
@@ -1428,6 +1673,8 @@ export function ProjectsPage() {
     setPurgedProjectIds((current) => new Set(current).add(projectId));
     await refresh();
   };
+=======
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
   const form = useForm<z.infer<typeof projectSchema>>({
     resolver: zodResolver(projectSchema),
     defaultValues: {
@@ -1494,13 +1741,18 @@ export function ProjectsPage() {
       <DialogContent className="max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Crear proyecto</DialogTitle>
+<<<<<<< HEAD
           <DialogDescription>
             Define el contrato correctamente; no podrá cambiarse tras iniciar la obra.
           </DialogDescription>
+=======
+          <DialogDescription>Define el contrato correctamente; no podrá cambiarse tras iniciar la obra.</DialogDescription>
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
         </DialogHeader>
         <Form {...form}>
           <form className="space-y-4" onSubmit={createProject}>
             <div className="grid gap-4 md:grid-cols-2">
+<<<<<<< HEAD
               <FormField
                 control={form.control}
                 name="code"
@@ -1639,6 +1891,57 @@ export function ProjectsPage() {
             {form.formState.errors.root ? (
               <p className="text-sm text-destructive">{form.formState.errors.root.message}</p>
             ) : null}
+=======
+              <FormField control={form.control} name="code" render={({ field }) => (
+                <FormItem><FormLabel>Código *</FormLabel><FormControl><Input {...field} placeholder="P-2026-001" /></FormControl><FormMessage /></FormItem>
+              )} />
+              <FormField control={form.control} name="status" render={({ field }) => (
+                <FormItem><FormLabel>Estado *</FormLabel>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <FormControl><SelectTrigger><SelectValue /></SelectTrigger></FormControl>
+                    <SelectContent>
+                      {Object.entries(projectStatusLabels).map(([value, label]) => (
+                        <SelectItem key={value} value={value}>{label}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select><FormMessage />
+                </FormItem>
+              )} />
+            </div>
+            <FormField control={form.control} name="name" render={({ field }) => (
+              <FormItem><FormLabel>Nombre *</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+            )} />
+            <div className="grid gap-4 md:grid-cols-2">
+              <FormField control={form.control} name="client_name" render={({ field }) => (
+                <FormItem><FormLabel>Cliente</FormLabel><FormControl><Input {...field} value={field.value ?? ""} /></FormControl><FormMessage /></FormItem>
+              )} />
+              <FormField control={form.control} name="location" render={({ field }) => (
+                <FormItem><FormLabel>Ubicación *</FormLabel><FormControl><Input {...field} value={field.value ?? ""} placeholder="Distrito, provincia, región" /></FormControl><FormMessage /></FormItem>
+              )} />
+            </div>
+            <div className="grid gap-4 md:grid-cols-2">
+              <FormField control={form.control} name="contract_type" render={({ field }) => (
+                <FormItem><FormLabel>Tipo de contrato *</FormLabel>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <FormControl><SelectTrigger><SelectValue placeholder="Selecciona el tipo" /></SelectTrigger></FormControl>
+                    <SelectContent>
+                      <SelectItem value="precios_unitarios">Precios unitarios</SelectItem>
+                      <SelectItem value="suma_alzada">Suma alzada</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormDescription>Obligatorio. No podrá modificarse luego del inicio.</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )} />
+              <FormField control={form.control} name="contract_amount" render={({ field }) => (
+                <FormItem><FormLabel>Monto contractual</FormLabel><FormControl><Input type="number" step="0.01" {...field} /></FormControl><FormMessage /></FormItem>
+              )} />
+            </div>
+            <FormField control={form.control} name="start_date" render={({ field }) => (
+              <FormItem><FormLabel>Fecha de inicio</FormLabel><FormControl><Input type="date" {...field} value={field.value ?? ""} /></FormControl><FormMessage /></FormItem>
+            )} />
+            {form.formState.errors.root ? <p className="text-sm text-destructive">{form.formState.errors.root.message}</p> : null}
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
             <DialogFooter>
               <Button type="submit" disabled={form.formState.isSubmitting}>
                 {form.formState.isSubmitting ? "Guardando…" : "Guardar proyecto"}
@@ -1662,26 +1965,39 @@ export function ProjectsPage() {
             <CardHeader>
               <CardTitle className="text-base">No puedes crear proyectos</CardTitle>
               <CardDescription>
+<<<<<<< HEAD
                 Solo los usuarios con rol <strong>Residente de obra</strong> o{" "}
                 <strong>Administrador</strong> pueden registrar nuevos proyectos. Pide al
                 administrador que te asigne el rol "Residente de obra" desde Usuarios y roles.
+=======
+                Solo los usuarios con rol <strong>Residente de obra</strong> o <strong>Administrador</strong> pueden registrar nuevos proyectos. Pide al administrador que te asigne el rol "Residente de obra" desde Usuarios y roles.
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
               </CardDescription>
             </CardHeader>
           </Card>
         ) : null}
+<<<<<<< HEAD
         {visibleProjects.length === 0 ? (
+=======
+        {projects.length === 0 ? (
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
           <Card>
             <CardHeader>
               <CardTitle className="text-base">Aún no hay proyectos registrados</CardTitle>
               <CardDescription>
+<<<<<<< HEAD
                 {canCreate
                   ? 'Usa el botón "Nuevo proyecto" para registrar la primera obra.'
                   : "Cuando el residente registre proyectos, aparecerán aquí."}
+=======
+                {canCreate ? "Usa el botón \"Nuevo proyecto\" para registrar la primera obra." : "Cuando el residente registre proyectos, aparecerán aquí."}
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
               </CardDescription>
             </CardHeader>
           </Card>
         ) : (
           <SectionTable
+<<<<<<< HEAD
             headers={[
               "Código",
               "Proyecto",
@@ -1694,6 +2010,10 @@ export function ProjectsPage() {
               "Acciones",
             ]}
             rows={visibleProjects.map((project) => {
+=======
+            headers={["Código", "Proyecto", "Cliente", "Ubicación", "Contrato", "Monto", "Estado", "Ficha técnica", "Acciones"]}
+            rows={projects.map((project) => {
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
               const incomplete = isFichaTecnicaIncomplete(project);
               return [
                 project.code,
@@ -1702,6 +2022,7 @@ export function ProjectsPage() {
                 project.location || "—",
                 contractTypeLabels[project.contract_type],
                 formatCurrency(Number(project.contract_amount), project.currency_code),
+<<<<<<< HEAD
                 <Badge key={`s-${project.id}`} variant="outline">
                   {projectStatusLabels[project.status]}
                 </Badge>,
@@ -1717,6 +2038,13 @@ export function ProjectsPage() {
                     }
                   />
                 </div>,
+=======
+                <Badge key={`s-${project.id}`} variant="outline">{projectStatusLabels[project.status]}</Badge>,
+                <Badge key={`f-${project.id}`} variant={incomplete ? "destructive" : "secondary"}>
+                  {incomplete ? "Incompleta" : "Completa"}
+                </Badge>,
+                <EditProjectDialog key={`e-${project.id}`} project={project} onSaved={refresh} />,
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
               ];
             })}
           />
@@ -1730,18 +2058,26 @@ export function BudgetsPage() {
   const { projects, budgetItems, refresh } = useWorkspace();
   const { user } = useAuth();
   const [selectedProjectId, setSelectedProjectId] = useState("");
+<<<<<<< HEAD
   const [preview, setPreview] = useState<Awaited<ReturnType<typeof detectBudgetWorkbook>> | null>(
     null,
   );
+=======
+  const [preview, setPreview] = useState<Awaited<ReturnType<typeof detectBudgetWorkbook>> | null>(null);
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
   const [file, setFile] = useState<File | null>(null);
   const [message, setMessage] = useState<string | null>(null);
 
   const uploadBudget = async () => {
     if (!file || !selectedProjectId || !user || !preview) return;
     const storagePath = `${selectedProjectId}/${Date.now()}-${file.name}`;
+<<<<<<< HEAD
     const storage = await supabase.storage
       .from("budget-imports")
       .upload(storagePath, file, { upsert: true });
+=======
+    const storage = await supabase.storage.from("budget-imports").upload(storagePath, file, { upsert: true });
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
     if (storage.error) return setMessage(storage.error.message);
 
     const importResult = await supabase
@@ -1770,8 +2106,11 @@ export function BudgetsPage() {
       base_quantity: row.base_quantity,
       unit_price: row.unit_price,
       partial_amount: row.partial_amount,
+<<<<<<< HEAD
       hierarchy_level: row.hierarchy_level ?? null,
       parent_item_code: row.parent_item_code ?? null,
+=======
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
       category: row.category || null,
       sort_order: index + 1,
     }));
@@ -1788,6 +2127,7 @@ export function BudgetsPage() {
 
   return (
     <AuthGuard>
+<<<<<<< HEAD
       <PageLayout
         title="Importación de presupuesto"
         description="Carga flexible de Excel para crear partidas base por proyecto."
@@ -2018,12 +2358,58 @@ export function BudgetsPage() {
               </Card>
             );
           })()}
+=======
+      <PageLayout title="Importación de presupuesto" description="Carga flexible de Excel para crear partidas base por proyecto.">
+        <div className="grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
+          <Card>
+            <CardHeader>
+              <CardTitle>Cargar Excel</CardTitle>
+              <CardDescription>Se detectan columnas como código, descripción, unidad, metrado y precio unitario.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <Select value={selectedProjectId} onValueChange={setSelectedProjectId}>
+                <SelectTrigger><SelectValue placeholder="Selecciona proyecto" /></SelectTrigger>
+                <SelectContent>{projects.map((project) => <SelectItem key={project.id} value={project.id}>{project.code} · {project.name}</SelectItem>)}</SelectContent>
+              </Select>
+              <Input type="file" accept=".xlsx,.xls" onChange={async (event) => {
+                const selected = event.target.files?.[0];
+                if (!selected) return;
+                setFile(selected);
+                const detected = await detectBudgetWorkbook(selected);
+                setPreview(detected);
+              }} />
+              {preview ? <div className="rounded-md border border-border bg-muted/40 p-3 text-sm text-muted-foreground">{preview.warnings.length ? preview.warnings.join(" ") : `Se detectaron ${preview.rows.length} partidas listas para importar.`}</div> : null}
+              {message ? <p className="text-sm text-primary">{message}</p> : null}
+              <Button onClick={() => void uploadBudget()} disabled={!preview || !selectedProjectId}>Importar presupuesto</Button>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Partidas registradas</CardTitle>
+              <CardDescription>{currentItems.length} partidas cargadas para el proyecto seleccionado.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <SectionTable
+                headers={["Código", "Descripción", "Unidad", "Metrado base", "P.U.", "Parcial"]}
+                rows={(preview?.rows ?? currentItems).slice(0, 12).map((item) => [
+                  "item_code" in item ? item.item_code || "—" : item.item_code || "—",
+                  item.description,
+                  item.unit,
+                  formatNumber(Number(item.base_quantity), 4),
+                  formatCurrency(Number(item.unit_price)),
+                  formatCurrency(Number(item.partial_amount)),
+                ])}
+              />
+            </CardContent>
+          </Card>
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
         </div>
       </PageLayout>
     </AuthGuard>
   );
 }
 
+<<<<<<< HEAD
 type MetradoLineRow = {
   id: string;
   item_id: string;
@@ -2734,6 +3120,73 @@ export function MetradosPage() {
             Selecciona un proyecto y un período para capturar los metrados de partidas ejecutadas.
           </p>
         )}
+=======
+export function MetradosPage() {
+  const { projects, budgetItems, metrados, refresh } = useWorkspace();
+  const { user } = useAuth();
+  const form = useForm<z.infer<typeof metradoSchema>>({ resolver: zodResolver(metradoSchema) });
+  const selectedProjectId = form.watch("project_id");
+  const projectItems = budgetItems.filter((item) => item.project_id === selectedProjectId);
+
+  const submit = form.handleSubmit(async (values) => {
+    if (!user) return;
+    const { error } = await supabase.from("metrado_entries").insert({
+      ...values,
+      created_by: user.id,
+      period_month: toPeriodDate(values.period_month),
+      status: "draft",
+    });
+    if (error) {
+      form.setError("root", { message: error.message });
+      return;
+    }
+    form.reset();
+    await refresh();
+  });
+
+  const validateEntry = async (id: string) => {
+    if (!user) return;
+    await supabase.from("metrado_entries").update({ status: "validated", validated_by: user.id, validated_at: new Date().toISOString() }).eq("id", id);
+    await refresh();
+  };
+
+  return (
+    <AuthGuard>
+      <PageLayout title="Metrados" description="Registro continuo por partida y período, con validación técnica para valorización.">
+        <div className="grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
+          <Card>
+            <CardHeader><CardTitle>Registrar metrado</CardTitle></CardHeader>
+            <CardContent>
+              <Form {...form}>
+                <form className="space-y-4" onSubmit={submit}>
+                  <FormField control={form.control} name="project_id" render={({ field }) => <FormItem><FormLabel>Proyecto</FormLabel><Select onValueChange={field.onChange} value={field.value}><FormControl><SelectTrigger><SelectValue placeholder="Selecciona proyecto" /></SelectTrigger></FormControl><SelectContent>{projects.map((project) => <SelectItem key={project.id} value={project.id}>{project.name}</SelectItem>)}</SelectContent></Select><FormMessage /></FormItem>} />
+                  <FormField control={form.control} name="item_id" render={({ field }) => <FormItem><FormLabel>Partida</FormLabel><Select onValueChange={field.onChange} value={field.value}><FormControl><SelectTrigger><SelectValue placeholder="Selecciona partida" /></SelectTrigger></FormControl><SelectContent>{projectItems.map((item) => <SelectItem key={item.id} value={item.id}>{item.description}</SelectItem>)}</SelectContent></Select><FormMessage /></FormItem>} />
+                  <div className="grid gap-4 md:grid-cols-2"><FormField control={form.control} name="entry_date" render={({ field }) => <FormItem><FormLabel>Fecha</FormLabel><FormControl><Input type="date" {...field} /></FormControl><FormMessage /></FormItem>} /><FormField control={form.control} name="period_month" render={({ field }) => <FormItem><FormLabel>Periodo</FormLabel><FormControl><Input type="month" {...field} /></FormControl><FormDescription>Se guarda el primer día del mes.</FormDescription><FormMessage /></FormItem>} /></div>
+                  <FormField control={form.control} name="quantity" render={({ field }) => <FormItem><FormLabel>Cantidad ejecutada</FormLabel><FormControl><Input type="number" step="0.0001" {...field} /></FormControl><FormMessage /></FormItem>} />
+                  <FormField control={form.control} name="notes" render={({ field }) => <FormItem><FormLabel>Observaciones</FormLabel><FormControl><Textarea {...field} value={field.value ?? ""} /></FormControl></FormItem>} />
+                  {form.formState.errors.root ? <p className="text-sm text-destructive">{form.formState.errors.root.message}</p> : null}
+                  <Button type="submit">Guardar metrado</Button>
+                </form>
+              </Form>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader><CardTitle>Histórico por período</CardTitle></CardHeader>
+            <CardContent>
+              <SectionTable
+                headers={["Fecha", "Periodo", "Cantidad", "Estado", "Acción"]}
+                rows={metrados.slice(0, 12).map((entry) => [
+                  formatDate(entry.entry_date),
+                  getPeriodLabel(entry.period_month),
+                  formatNumber(Number(entry.quantity), 4),
+                  <Badge key={entry.id} variant="outline">{entry.status}</Badge>,
+                  entry.status !== "validated" ? <Button key={entry.id} size="sm" variant="outline" onClick={() => void validateEntry(entry.id)}>Validar</Button> : "—",
+                ])}
+              />
+            </CardContent>
+          </Card>
+        </div>
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
       </PageLayout>
     </AuthGuard>
   );
@@ -2743,11 +3196,15 @@ export function MemoriasPage() {
   const { projects, memorias, refresh } = useWorkspace();
   const { user } = useAuth();
   const form = useForm<z.infer<typeof memoriaSchema>>({ resolver: zodResolver(memoriaSchema) });
+<<<<<<< HEAD
   const selectedProjectId = form.watch("project_id");
   const selectedProject = projects.find((p) => p.id === selectedProjectId);
   const [content, setContent] = useState(
     "<p>Describir el avance físico ejecutado, frentes de trabajo y sustento técnico.</p>",
   );
+=======
+  const [content, setContent] = useState("<p>Describir el avance físico ejecutado, frentes de trabajo y sustento técnico.</p>");
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
 
   const submit = form.handleSubmit(async (values) => {
     if (!user) return;
@@ -2769,15 +3226,20 @@ export function MemoriasPage() {
 
   const updateStatus = async (id: string, status: "in_review" | "approved" | "rejected") => {
     if (!user) return;
+<<<<<<< HEAD
     await supabase
       .from("memoria_valorizada")
       .update({ status, reviewed_by: user.id, reviewed_at: new Date().toISOString() })
       .eq("id", id);
+=======
+    await supabase.from("memoria_valorizada").update({ status, reviewed_by: user.id, reviewed_at: new Date().toISOString() }).eq("id", id);
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
     await refresh();
   };
 
   return (
     <AuthGuard>
+<<<<<<< HEAD
       <PageLayout
         title="Memoria valorizada"
         description="Documento obligatorio previo a cualquier valorización mensual."
@@ -2887,15 +3349,33 @@ export function MemoriasPage() {
                   {form.formState.errors.root ? (
                     <p className="text-sm text-destructive">{form.formState.errors.root.message}</p>
                   ) : null}
+=======
+      <PageLayout title="Memoria valorizada" description="Documento obligatorio previo a cualquier valorización mensual.">
+        <div className="grid gap-6 xl:grid-cols-[1fr_1fr]">
+          <Card>
+            <CardHeader><CardTitle>Redactar memoria</CardTitle></CardHeader>
+            <CardContent className="space-y-4">
+              <Form {...form}>
+                <form className="space-y-4" onSubmit={submit}>
+                  <div className="grid gap-4 md:grid-cols-2"><FormField control={form.control} name="project_id" render={({ field }) => <FormItem><FormLabel>Proyecto</FormLabel><Select onValueChange={field.onChange} value={field.value}><FormControl><SelectTrigger><SelectValue placeholder="Selecciona proyecto" /></SelectTrigger></FormControl><SelectContent>{projects.map((project) => <SelectItem key={project.id} value={project.id}>{project.name}</SelectItem>)}</SelectContent></Select><FormMessage /></FormItem>} /><FormField control={form.control} name="period_month" render={({ field }) => <FormItem><FormLabel>Periodo</FormLabel><FormControl><Input type="month" {...field} /></FormControl><FormMessage /></FormItem>} /></div>
+                  <FormField control={form.control} name="title" render={({ field }) => <FormItem><FormLabel>Título</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+                  <FormField control={form.control} name="executive_summary" render={({ field }) => <FormItem><FormLabel>Resumen ejecutivo</FormLabel><FormControl><Textarea {...field} value={field.value ?? ""} /></FormControl></FormItem>} />
+                  <div className="space-y-2"><label className="text-sm font-medium text-foreground">Contenido técnico</label><RichTextEditor value={content} onChange={setContent} /></div>
+                  {form.formState.errors.root ? <p className="text-sm text-destructive">{form.formState.errors.root.message}</p> : null}
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
                   <Button type="submit">Guardar memoria</Button>
                 </form>
               </Form>
             </CardContent>
           </Card>
           <Card>
+<<<<<<< HEAD
             <CardHeader>
               <CardTitle>Memorias del período</CardTitle>
             </CardHeader>
+=======
+            <CardHeader><CardTitle>Memorias del período</CardTitle></CardHeader>
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
             <CardContent className="space-y-4">
               {memorias.slice(0, 10).map((memoria) => {
                 const rich = parseRichTextDocument(memoria.content_json);
@@ -2905,6 +3385,7 @@ export function MemoriasPage() {
                     <div className="flex flex-wrap items-start justify-between gap-3">
                       <div>
                         <p className="text-sm font-medium text-foreground">{memoria.title}</p>
+<<<<<<< HEAD
                         <p className="text-xs text-muted-foreground">
                           {project?.name || "Proyecto"} · {getPeriodLabel(memoria.period_month)}
                         </p>
@@ -2945,6 +3426,18 @@ export function MemoriasPage() {
                           PDF
                         </Button>
                       ) : null}
+=======
+                        <p className="text-xs text-muted-foreground">{project?.name || "Proyecto"} · {getPeriodLabel(memoria.period_month)}</p>
+                      </div>
+                      <Badge variant="outline">{documentStatusLabels[memoria.status]}</Badge>
+                    </div>
+                    <p className="mt-3 line-clamp-3 text-sm text-muted-foreground">{rich.plainText || memoria.executive_summary || "Sin detalle"}</p>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      <Button size="sm" variant="outline" onClick={() => updateStatus(memoria.id, "in_review")}>Enviar a revisión</Button>
+                      <Button size="sm" variant="outline" onClick={() => updateStatus(memoria.id, "approved")}>Aprobar</Button>
+                      <Button size="sm" variant="outline" onClick={() => updateStatus(memoria.id, "rejected")}>Observar</Button>
+                      {project ? <Button size="sm" variant="ghost" onClick={() => exportMemoriaPdf(project, memoria)}>PDF</Button> : null}
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
                     </div>
                   </div>
                 );
@@ -2958,6 +3451,7 @@ export function MemoriasPage() {
 }
 
 export function ValuationsPage() {
+<<<<<<< HEAD
   const { projects, budgetItems, metrados, memorias, valuations, valuationLines, refresh } =
     useWorkspace();
   const { user } = useAuth();
@@ -2965,11 +3459,17 @@ export function ValuationsPage() {
     resolver: zodResolver(valuationSchema),
     defaultValues: { deductions_amount: 0, progress_percent: 0 },
   });
+=======
+  const { projects, budgetItems, metrados, memorias, valuations, valuationLines, refresh } = useWorkspace();
+  const { user } = useAuth();
+  const form = useForm<z.infer<typeof valuationSchema>>({ resolver: zodResolver(valuationSchema), defaultValues: { deductions_amount: 0, progress_percent: 0 } });
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
 
   const createValuation = form.handleSubmit(async (values) => {
     if (!user) return;
     const periodMonth = toPeriodDate(values.period_month);
     const project = projects.find((item) => item.id === values.project_id);
+<<<<<<< HEAD
     const memoria = memorias.find(
       (item) => item.project_id === values.project_id && item.period_month === periodMonth,
     );
@@ -2986,6 +3486,15 @@ export function ValuationsPage() {
         entry.period_month === periodMonth &&
         entry.status === "validated",
     );
+=======
+    const memoria = memorias.find((item) => item.project_id === values.project_id && item.period_month === periodMonth);
+    if (!project || !memoria) {
+      form.setError("root", { message: "Debe existir una memoria valorizada para el período seleccionado." });
+      return;
+    }
+
+    const entries = metrados.filter((entry) => entry.project_id === values.project_id && entry.period_month === periodMonth && entry.status === "validated");
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
     if (!entries.length) {
       form.setError("root", { message: "Debe haber metrados validados en el período." });
       return;
@@ -3007,6 +3516,7 @@ export function ValuationsPage() {
         quantity_period: quantity,
         quantity_accumulated: previousAccumulated + quantity,
         unit_price_applied: Number(item?.unit_price || 0),
+<<<<<<< HEAD
         percentage_applied:
           project.contract_type === "suma_alzada" ? Number(values.progress_percent || 0) : 0,
         line_amount:
@@ -3041,15 +3551,45 @@ export function ValuationsPage() {
       })
       .select("id")
       .single();
+=======
+        percentage_applied: project.contract_type === "suma_alzada" ? Number(values.progress_percent || 0) : 0,
+        line_amount: project.contract_type === "suma_alzada"
+          ? (Number(project.contract_amount) * Number(values.progress_percent || 0)) / 100
+          : quantity * Number(item?.unit_price || 0),
+      };
+    });
+
+    const grossAmount = project.contract_type === "suma_alzada"
+      ? (Number(project.contract_amount) * Number(values.progress_percent || 0)) / 100
+      : lines.reduce((sum, line) => sum + line.line_amount, 0);
+
+    const valuationResult = await supabase.from("valuations").insert({
+      project_id: values.project_id,
+      period_month: periodMonth,
+      memoria_id: memoria.id,
+      total_quantity: entries.reduce((sum, entry) => sum + Number(entry.quantity), 0),
+      progress_percent: project.contract_type === "suma_alzada" ? Number(values.progress_percent || 0) : calculateProjectProgress(project, valuations),
+      gross_amount: grossAmount,
+      deductions_amount: Number(values.deductions_amount),
+      net_amount: grossAmount - Number(values.deductions_amount),
+      created_by: user.id,
+      contract_type_snapshot: project.contract_type,
+      status: "pending",
+    }).select("id").single();
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
 
     if (valuationResult.error) {
       form.setError("root", { message: valuationResult.error.message });
       return;
     }
 
+<<<<<<< HEAD
     const linesResult = await supabase
       .from("valuation_lines")
       .insert(lines.map((line) => ({ ...line, valuation_id: valuationResult.data.id })));
+=======
+    const linesResult = await supabase.from("valuation_lines").insert(lines.map((line) => ({ ...line, valuation_id: valuationResult.data.id })));
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
     if (linesResult.error) {
       form.setError("root", { message: linesResult.error.message });
       return;
@@ -3061,6 +3601,7 @@ export function ValuationsPage() {
 
   const updateStatus = async (id: string, status: "reviewed" | "approved" | "rejected") => {
     if (!user) return;
+<<<<<<< HEAD
     const payload =
       status === "approved"
         ? {
@@ -3069,12 +3610,18 @@ export function ValuationsPage() {
             supervisor_reviewed_at: new Date().toISOString(),
           }
         : { status, resident_reviewed_by: user.id, resident_reviewed_at: new Date().toISOString() };
+=======
+    const payload = status === "approved"
+      ? { status, supervisor_reviewed_by: user.id, supervisor_reviewed_at: new Date().toISOString() }
+      : { status, resident_reviewed_by: user.id, resident_reviewed_at: new Date().toISOString() };
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
     await supabase.from("valuations").update(payload).eq("id", id);
     await refresh();
   };
 
   return (
     <AuthGuard>
+<<<<<<< HEAD
       <PageLayout
         title="Valorizaciones"
         description="Cálculo mensual condicionado por memoria aprobada y metrados validados."
@@ -3159,15 +3706,31 @@ export function ValuationsPage() {
                   {form.formState.errors.root ? (
                     <p className="text-sm text-destructive">{form.formState.errors.root.message}</p>
                   ) : null}
+=======
+      <PageLayout title="Valorizaciones" description="Cálculo mensual condicionado por memoria aprobada y metrados validados.">
+        <div className="grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
+          <Card>
+            <CardHeader><CardTitle>Generar valorización</CardTitle></CardHeader>
+            <CardContent>
+              <Form {...form}>
+                <form className="space-y-4" onSubmit={createValuation}>
+                  <div className="grid gap-4 md:grid-cols-2"><FormField control={form.control} name="project_id" render={({ field }) => <FormItem><FormLabel>Proyecto</FormLabel><Select onValueChange={field.onChange} value={field.value}><FormControl><SelectTrigger><SelectValue placeholder="Selecciona proyecto" /></SelectTrigger></FormControl><SelectContent>{projects.map((project) => <SelectItem key={project.id} value={project.id}>{project.name}</SelectItem>)}</SelectContent></Select><FormMessage /></FormItem>} /><FormField control={form.control} name="period_month" render={({ field }) => <FormItem><FormLabel>Periodo</FormLabel><FormControl><Input type="month" {...field} /></FormControl><FormMessage /></FormItem>} /></div>
+                  <div className="grid gap-4 md:grid-cols-2"><FormField control={form.control} name="deductions_amount" render={({ field }) => <FormItem><FormLabel>Deducciones</FormLabel><FormControl><Input type="number" step="0.01" {...field} /></FormControl><FormMessage /></FormItem>} /><FormField control={form.control} name="progress_percent" render={({ field }) => <FormItem><FormLabel>% avance (suma alzada)</FormLabel><FormControl><Input type="number" step="0.01" {...field} /></FormControl><FormDescription>Solo aplica para contratos a suma alzada.</FormDescription></FormItem>} /></div>
+                  {form.formState.errors.root ? <p className="text-sm text-destructive">{form.formState.errors.root.message}</p> : null}
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
                   <Button type="submit">Calcular y guardar</Button>
                 </form>
               </Form>
             </CardContent>
           </Card>
           <Card>
+<<<<<<< HEAD
             <CardHeader>
               <CardTitle>Histórico de valorizaciones</CardTitle>
             </CardHeader>
+=======
+            <CardHeader><CardTitle>Histórico de valorizaciones</CardTitle></CardHeader>
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
             <CardContent>
               {valuations.map((valuation) => {
                 const project = projects.find((item) => item.id === valuation.project_id);
@@ -3176,6 +3739,7 @@ export function ValuationsPage() {
                   <div key={valuation.id} className="mb-4 rounded-lg border border-border p-4">
                     <div className="flex flex-wrap items-center justify-between gap-3">
                       <div>
+<<<<<<< HEAD
                         <p className="text-sm font-medium text-foreground">
                           {project?.name || "Proyecto"}
                         </p>
@@ -3183,10 +3747,15 @@ export function ValuationsPage() {
                           {getPeriodLabel(valuation.period_month)} ·{" "}
                           {contractTypeLabels[valuation.contract_type_snapshot]}
                         </p>
+=======
+                        <p className="text-sm font-medium text-foreground">{project?.name || "Proyecto"}</p>
+                        <p className="text-xs text-muted-foreground">{getPeriodLabel(valuation.period_month)} · {contractTypeLabels[valuation.contract_type_snapshot]}</p>
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
                       </div>
                       <Badge variant="outline">{valuationStatusLabels[valuation.status]}</Badge>
                     </div>
                     <div className="mt-3 grid gap-2 text-sm text-muted-foreground md:grid-cols-3">
+<<<<<<< HEAD
                       <p>
                         Bruto:{" "}
                         {formatCurrency(
@@ -3240,6 +3809,17 @@ export function ValuationsPage() {
                           PDF
                         </Button>
                       ) : null}
+=======
+                      <p>Bruto: {formatCurrency(Number(valuation.gross_amount), project?.currency_code || "PEN")}</p>
+                      <p>Deducciones: {formatCurrency(Number(valuation.deductions_amount), project?.currency_code || "PEN")}</p>
+                      <p>Neto: {formatCurrency(Number(valuation.net_amount), project?.currency_code || "PEN")}</p>
+                    </div>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      <Button size="sm" variant="outline" onClick={() => updateStatus(valuation.id, "reviewed")}>Revisar</Button>
+                      <Button size="sm" variant="outline" onClick={() => updateStatus(valuation.id, "approved")}>Aprobar</Button>
+                      <Button size="sm" variant="outline" onClick={() => updateStatus(valuation.id, "rejected")}>Rechazar</Button>
+                      {project ? <Button size="sm" variant="ghost" onClick={() => exportValuationPdf(project, valuation, lines)}>PDF</Button> : null}
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
                     </div>
                   </div>
                 );
@@ -3255,6 +3835,7 @@ export function ValuationsPage() {
 export function ApprovalsPage() {
   const { memorias, valuations, projects } = useWorkspace();
   const pendingMemorias = memorias.filter((item) => item.status === "in_review");
+<<<<<<< HEAD
   const pendingValuations = valuations.filter(
     (item) => item.status === "pending" || item.status === "reviewed",
   );
@@ -3297,6 +3878,16 @@ export function ApprovalsPage() {
               />
             </CardContent>
           </Card>
+=======
+  const pendingValuations = valuations.filter((item) => item.status === "pending" || item.status === "reviewed");
+
+  return (
+    <AuthGuard>
+      <PageLayout title="Aprobaciones" description="Cola operativa para revisión del residente y aprobación del supervisor.">
+        <div className="grid gap-6 lg:grid-cols-2">
+          <Card><CardHeader><CardTitle>Memorias en revisión</CardTitle></CardHeader><CardContent><SectionTable headers={["Proyecto", "Periodo", "Estado"]} rows={pendingMemorias.map((item) => [projects.find((project) => project.id === item.project_id)?.name || "Proyecto", getPeriodLabel(item.period_month), documentStatusLabels[item.status]])} /></CardContent></Card>
+          <Card><CardHeader><CardTitle>Valorizaciones por decidir</CardTitle></CardHeader><CardContent><SectionTable headers={["Proyecto", "Periodo", "Neto", "Estado"]} rows={pendingValuations.map((item) => [projects.find((project) => project.id === item.project_id)?.name || "Proyecto", getPeriodLabel(item.period_month), formatCurrency(Number(item.net_amount)), valuationStatusLabels[item.status]])} /></CardContent></Card>
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
         </div>
       </PageLayout>
     </AuthGuard>
@@ -3308,6 +3899,7 @@ export function ReportsPage() {
 
   return (
     <AuthGuard>
+<<<<<<< HEAD
       <PageLayout
         title="Reportes"
         description="Consolidados financieros y exportes operativos para control de obra."
@@ -3374,6 +3966,12 @@ export function ReportsPage() {
               ))}
             </CardContent>
           </Card>
+=======
+      <PageLayout title="Reportes" description="Consolidados financieros y exportes operativos para control de obra." actions={<Button variant="outline" onClick={() => exportFinancialWorkbook(projects, valuations)}>Exportar Excel</Button>}>
+        <div className="grid gap-6 xl:grid-cols-[1fr_1fr]">
+          <Card><CardHeader><CardTitle>Resumen financiero</CardTitle></CardHeader><CardContent><SectionTable headers={["Proyecto", "Contrato", "Valorizado aprobado"]} rows={projects.map((project) => [project.name, formatCurrency(Number(project.contract_amount), project.currency_code), formatCurrency(valuations.filter((item) => item.project_id === project.id && item.status === "approved").reduce((sum, item) => sum + Number(item.net_amount), 0), project.currency_code)])} /></CardContent></Card>
+          <Card><CardHeader><CardTitle>Exportes rápidos</CardTitle></CardHeader><CardContent className="space-y-3">{projects.map((project) => <div key={project.id} className="flex flex-wrap items-center justify-between gap-3 rounded-md border border-border p-3"><div><p className="text-sm font-medium text-foreground">{project.name}</p><p className="text-xs text-muted-foreground">{budgetItems.filter((item) => item.project_id === project.id).length} partidas · {metrados.filter((item) => item.project_id === project.id).length} metrados</p></div><Button size="sm" variant="outline" onClick={() => exportMetradosWorkbook(project, metrados.filter((item) => item.project_id === project.id), Object.fromEntries(budgetItems.map((item) => [item.id, item.description])))}>Excel metrados</Button></div>)}</CardContent></Card>
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
         </div>
       </PageLayout>
     </AuthGuard>
@@ -3383,17 +3981,25 @@ export function ReportsPage() {
 export function LiquidationPage() {
   const { projects, valuations, liquidations, refresh } = useWorkspace();
   const { user } = useAuth();
+<<<<<<< HEAD
   const form = useForm<z.infer<typeof liquidationSchema>>({
     resolver: zodResolver(liquidationSchema),
     defaultValues: { total_deductions_amount: 0 },
   });
+=======
+  const form = useForm<z.infer<typeof liquidationSchema>>({ resolver: zodResolver(liquidationSchema), defaultValues: { total_deductions_amount: 0 } });
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
 
   const submit = form.handleSubmit(async (values) => {
     if (!user) return;
     const project = projects.find((item) => item.id === values.project_id);
+<<<<<<< HEAD
     const approved = valuations.filter(
       (item) => item.project_id === values.project_id && item.status === "approved",
     );
+=======
+    const approved = valuations.filter((item) => item.project_id === values.project_id && item.status === "approved");
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
     const totalValued = approved.reduce((sum, item) => sum + Number(item.net_amount), 0);
     const { error } = await supabase.from("liquidations").insert({
       project_id: values.project_id,
@@ -3405,9 +4011,13 @@ export function LiquidationPage() {
       status: "draft",
     });
     if (error) {
+<<<<<<< HEAD
       form.setError("root", {
         message: `${error.message}${project?.status !== "closing" && project?.status !== "closed" ? " · Pon el proyecto en cierre para liquidar." : ""}`,
       });
+=======
+      form.setError("root", { message: `${error.message}${project?.status !== "closing" && project?.status !== "closed" ? " · Pon el proyecto en cierre para liquidar." : ""}` });
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
       return;
     }
     form.reset({ total_deductions_amount: 0 });
@@ -3416,6 +4026,7 @@ export function LiquidationPage() {
 
   return (
     <AuthGuard>
+<<<<<<< HEAD
       <PageLayout
         title="Liquidación"
         description="Cierre económico final del proyecto una vez completado el historial de valorizaciones."
@@ -3526,6 +4137,12 @@ export function LiquidationPage() {
               })}
             </CardContent>
           </Card>
+=======
+      <PageLayout title="Liquidación" description="Cierre económico final del proyecto una vez completado el historial de valorizaciones.">
+        <div className="grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
+          <Card><CardHeader><CardTitle>Generar liquidación</CardTitle></CardHeader><CardContent><Form {...form}><form className="space-y-4" onSubmit={submit}><FormField control={form.control} name="project_id" render={({ field }) => <FormItem><FormLabel>Proyecto</FormLabel><Select onValueChange={field.onChange} value={field.value}><FormControl><SelectTrigger><SelectValue placeholder="Selecciona proyecto" /></SelectTrigger></FormControl><SelectContent>{projects.map((project) => <SelectItem key={project.id} value={project.id}>{project.name}</SelectItem>)}</SelectContent></Select><FormMessage /></FormItem>} /><FormField control={form.control} name="total_deductions_amount" render={({ field }) => <FormItem><FormLabel>Deducciones finales</FormLabel><FormControl><Input type="number" step="0.01" {...field} /></FormControl><FormMessage /></FormItem>} /><FormField control={form.control} name="summary_text" render={({ field }) => <FormItem><FormLabel>Resumen de cierre</FormLabel><FormControl><Textarea {...field} value={field.value ?? ""} /></FormControl></FormItem>} />{form.formState.errors.root ? <p className="text-sm text-destructive">{form.formState.errors.root.message}</p> : null}<Button type="submit">Generar liquidación</Button></form></Form></CardContent></Card>
+          <Card><CardHeader><CardTitle>Liquidaciones registradas</CardTitle></CardHeader><CardContent>{liquidations.map((liquidation) => { const project = projects.find((item) => item.id === liquidation.project_id); const relatedValuations = valuations.filter((item) => item.project_id === liquidation.project_id && item.status === "approved"); return <div key={liquidation.id} className="mb-4 rounded-lg border border-border p-4"><p className="text-sm font-medium text-foreground">{project?.name || "Proyecto"}</p><p className="mt-2 text-sm text-muted-foreground">Monto final: {formatCurrency(Number(liquidation.final_amount), project?.currency_code || "PEN")}</p><div className="mt-3 flex gap-2">{project ? <Button size="sm" variant="outline" onClick={() => exportLiquidationPdf(project, liquidation, relatedValuations)}>PDF</Button> : null}</div></div>; })}</CardContent></Card>
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
         </div>
       </PageLayout>
     </AuthGuard>
@@ -3533,12 +4150,17 @@ export function LiquidationPage() {
 }
 
 export function DocumentsPage() {
+<<<<<<< HEAD
   const { projects, memorias, valuations, valuationLines, liquidations, metrados, budgetItems } =
     useWorkspace();
+=======
+  const { projects, memorias, valuations, valuationLines, liquidations, metrados, budgetItems } = useWorkspace();
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
   const itemMap = Object.fromEntries(budgetItems.map((item) => [item.id, item.description]));
 
   return (
     <AuthGuard>
+<<<<<<< HEAD
       <PageLayout
         title="Centro de documentos"
         description="Exportación operativa de memorias, valorizaciones, metrados y liquidaciones."
@@ -3636,6 +4258,12 @@ export function DocumentsPage() {
               ))}
             </CardContent>
           </Card>
+=======
+      <PageLayout title="Centro de documentos" description="Exportación operativa de memorias, valorizaciones, metrados y liquidaciones.">
+        <div className="grid gap-6 lg:grid-cols-2">
+          <Card><CardHeader><CardTitle>PDF</CardTitle></CardHeader><CardContent className="space-y-3">{projects.map((project) => <div key={project.id} className="rounded-md border border-border p-3"><p className="text-sm font-medium text-foreground">{project.name}</p><div className="mt-3 flex flex-wrap gap-2">{memorias.filter((item) => item.project_id === project.id).slice(0, 1).map((memoria) => <Button key={memoria.id} size="sm" variant="outline" onClick={() => exportMemoriaPdf(project, memoria)}>Memoria PDF</Button>)}{valuations.filter((item) => item.project_id === project.id).slice(0, 1).map((valuation) => <Button key={valuation.id} size="sm" variant="outline" onClick={() => exportValuationPdf(project, valuation, valuationLines.filter((line) => line.valuation_id === valuation.id))}>Valorización PDF</Button>)}{liquidations.filter((item) => item.project_id === project.id).slice(0, 1).map((liquidation) => <Button key={liquidation.id} size="sm" variant="outline" onClick={() => exportLiquidationPdf(project, liquidation, valuations.filter((valuation) => valuation.project_id === project.id))}>Liquidación PDF</Button>)}</div></div>)}</CardContent></Card>
+          <Card><CardHeader><CardTitle>Excel</CardTitle></CardHeader><CardContent className="space-y-3">{projects.map((project) => <div key={project.id} className="rounded-md border border-border p-3"><p className="text-sm font-medium text-foreground">{project.name}</p><div className="mt-3 flex flex-wrap gap-2"><Button size="sm" variant="outline" onClick={() => exportMetradosWorkbook(project, metrados.filter((entry) => entry.project_id === project.id), itemMap)}>Metrados</Button></div></div>)}</CardContent></Card>
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
         </div>
       </PageLayout>
     </AuthGuard>
@@ -3656,6 +4284,7 @@ export function UsersPage() {
 
   return (
     <AuthGuard requireAdmin>
+<<<<<<< HEAD
       <PageLayout
         title="Usuarios y roles"
         description="Asignación segura de roles separados del perfil de usuario."
@@ -3699,6 +4328,10 @@ export function UsersPage() {
             ])}
           />
         ) : null}
+=======
+      <PageLayout title="Usuarios y roles" description="Asignación segura de roles separados del perfil de usuario.">
+        {isAdmin ? <SectionTable headers={["Usuario", "Cargo", "Roles", "Asignar"]} rows={profiles.map((profile) => [profile.full_name || profile.user_id, profile.job_title || "—", userRoles.filter((role) => role.user_id === profile.user_id).map((role) => roleLabels[role.role]).join(", "), <div key={profile.id} className="flex gap-2"><Select value={selectedRole[profile.user_id] || ""} onValueChange={(value) => setSelectedRole((current) => ({ ...current, [profile.user_id]: value }))}><SelectTrigger className="w-44"><SelectValue placeholder="Rol" /></SelectTrigger><SelectContent>{Object.entries(roleLabels).map(([value, label]) => <SelectItem key={value} value={value}>{label}</SelectItem>)}</SelectContent></Select><Button size="sm" variant="outline" onClick={() => void assignRole(profile.user_id)}>Asignar</Button></div>])} /> : null}
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
       </PageLayout>
     </AuthGuard>
   );
@@ -3706,6 +4339,7 @@ export function UsersPage() {
 
 export function SettingsPage() {
   const { profile, refreshProfile } = useAuth();
+<<<<<<< HEAD
   const form = useForm<z.infer<typeof settingsSchema>>({
     resolver: zodResolver(settingsSchema),
     values: {
@@ -3715,6 +4349,9 @@ export function SettingsPage() {
       signature_url: profile?.signature_url || "",
     },
   });
+=======
+  const form = useForm<z.infer<typeof settingsSchema>>({ resolver: zodResolver(settingsSchema), values: { full_name: profile?.full_name || "", job_title: profile?.job_title || "", phone: profile?.phone || "", signature_url: profile?.signature_url || "" } });
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
 
   const submit = form.handleSubmit(async (values) => {
     if (!profile) return;
@@ -3728,6 +4365,7 @@ export function SettingsPage() {
 
   return (
     <AuthGuard>
+<<<<<<< HEAD
       <PageLayout
         title="Configuración"
         description="Perfil básico, firma y datos de contacto para trazabilidad documental."
@@ -3801,6 +4439,10 @@ export function SettingsPage() {
             </Form>
           </CardContent>
         </Card>
+=======
+      <PageLayout title="Configuración" description="Perfil básico, firma y datos de contacto para trazabilidad documental.">
+        <Card className="max-w-2xl"><CardHeader><CardTitle>Perfil de usuario</CardTitle></CardHeader><CardContent><Form {...form}><form className="space-y-4" onSubmit={submit}><FormField control={form.control} name="full_name" render={({ field }) => <FormItem><FormLabel>Nombre completo</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} /><div className="grid gap-4 md:grid-cols-2"><FormField control={form.control} name="job_title" render={({ field }) => <FormItem><FormLabel>Cargo</FormLabel><FormControl><Input {...field} value={field.value ?? ""} /></FormControl></FormItem>} /><FormField control={form.control} name="phone" render={({ field }) => <FormItem><FormLabel>Teléfono</FormLabel><FormControl><Input {...field} value={field.value ?? ""} /></FormControl></FormItem>} /></div><FormField control={form.control} name="signature_url" render={({ field }) => <FormItem><FormLabel>URL de firma</FormLabel><FormControl><Input {...field} value={field.value ?? ""} /></FormControl><FormDescription>Usa una imagen alojada en un servicio seguro o bucket interno.</FormDescription></FormItem>} />{form.formState.errors.root ? <p className="text-sm text-destructive">{form.formState.errors.root.message}</p> : null}<Button type="submit">Guardar cambios</Button></form></Form></CardContent></Card>
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
       </PageLayout>
     </AuthGuard>
   );
@@ -3808,6 +4450,7 @@ export function SettingsPage() {
 
 export function HomePage() {
   return (
+<<<<<<< HEAD
     <PageLayout
       title="JJ&PP Ingenieros"
       description="Accede al sistema operativo para controlar metrados, valorizaciones y cierre económico de obra."
@@ -3833,6 +4476,12 @@ export function HomePage() {
               </CardDescription>
             </CardHeader>
           </Card>
+=======
+    <PageLayout title="JJ&PP Ingenieros" description="Accede al sistema operativo para controlar metrados, valorizaciones y cierre económico de obra." actions={<Button asChild><Link to="/login">Ingresar al sistema</Link></Button>}>
+      <div className="grid gap-6 lg:grid-cols-3">
+        {["Control técnico", "Valorización mensual", "Liquidación final"].map((title, index) => (
+          <Card key={title}><CardHeader><CardTitle>{title}</CardTitle><CardDescription>{["Registro trazable de partidas, metrados y memorias valorizadas.","Cálculo por tipo contractual con revisión y aprobación.","Consolidación económica de obra con exportes listos."][index]}</CardDescription></CardHeader></Card>
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
         ))}
       </div>
     </PageLayout>

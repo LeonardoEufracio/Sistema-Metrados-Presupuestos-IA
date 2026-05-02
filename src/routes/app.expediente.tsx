@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
+<<<<<<< HEAD
 import {
   AlertTriangle,
   ArrowLeft,
@@ -10,6 +11,9 @@ import {
   Plus,
   Trash2,
 } from "lucide-react";
+=======
+import { ArrowLeft, ArrowRight, Download, FileDown, Loader2, Plus, Trash2 } from "lucide-react";
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
 import { toast } from "sonner";
 
 import { PageLayout } from "@/components/app/page-layout";
@@ -18,6 +22,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+<<<<<<< HEAD
 import {
   Select,
   SelectContent,
@@ -50,6 +55,23 @@ import {
   totals,
   type DeductionLine,
   type DeductionType,
+=======
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { supabase } from "@/integrations/supabase/client";
+import { useWorkspace } from "@/components/app/workspace-provider";
+import { isFichaTecnicaIncomplete } from "@/components/app/workspace-pages";
+import { useAuth } from "@/lib/auth";
+import {
+  buildValuationTable,
+  computeLinePartial,
+  deductionLabels,
+  formatMoney,
+  formatNum,
+  totals,
+  type DeductionLine,
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
   type MetradoLine,
 } from "@/lib/expediente";
 import { generateExpedienteClientPdf } from "@/lib/expediente-client-pdf";
@@ -69,20 +91,32 @@ type Period = {
   metas: string | null;
   ocurrencias: string | null;
   conclusiones: string | null;
+<<<<<<< HEAD
   resumen_ejecutivo: string | null;
+=======
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
 };
 
 const STEPS = [
   { id: 1, label: "Proyecto y período" },
+<<<<<<< HEAD
   { id: 2, label: "Ficha técnica" },
   { id: 3, label: "Memoria valorizada e informe técnico" },
+=======
+  { id: 2, label: "Metrados detallados" },
+  { id: 3, label: "Narrativa técnica" },
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
   { id: 4, label: "Deducciones" },
   { id: 5, label: "Resumen y PDF" },
 ] as const;
 
 function ExpedientePage() {
   const { user } = useAuth();
+<<<<<<< HEAD
   const { projects, budgetItems, refresh } = useWorkspace();
+=======
+  const { projects, budgetItems } = useWorkspace();
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
   const [step, setStep] = useState(1);
   const [projectId, setProjectId] = useState<string>("");
   const [periods, setPeriods] = useState<Period[]>([]);
@@ -96,10 +130,14 @@ function ExpedientePage() {
 
   const project = projects.find((p) => p.id === projectId);
   const period = periods.find((p) => p.id === periodId);
+<<<<<<< HEAD
   const items = useMemo(
     () => budgetItems.filter((b) => b.project_id === projectId),
     [budgetItems, projectId],
   );
+=======
+  const items = useMemo(() => budgetItems.filter((b) => b.project_id === projectId), [budgetItems, projectId]);
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
 
   // Cargar períodos del proyecto
   useEffect(() => {
@@ -142,10 +180,14 @@ function ExpedientePage() {
     void supabase
       .from("metrado_lines")
       .select("*")
+<<<<<<< HEAD
       .in(
         "period_id",
         prevPeriods.map((p) => p.id),
       )
+=======
+      .in("period_id", prevPeriods.map((p) => p.id))
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
       .then(({ data }) => {
         const m = new Map<string, MetradoLine[]>();
         for (const l of (data ?? []) as MetradoLine[]) {
@@ -171,6 +213,7 @@ function ExpedientePage() {
   const currency = project?.currency_code ?? "PEN";
 
   // -------- Acciones --------
+<<<<<<< HEAD
   async function createPeriod(form: {
     number: number;
     from: string;
@@ -248,6 +291,10 @@ function ExpedientePage() {
       return false;
     }
 
+=======
+  async function createPeriod(form: { number: number; from: string; to: string }) {
+    if (!projectId || !user) return;
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
     const { data, error } = await supabase
       .from("valuation_periods")
       .insert({
@@ -261,12 +308,53 @@ function ExpedientePage() {
       .single();
     if (error) {
       toast.error(error.message);
+<<<<<<< HEAD
       return false;
+=======
+      return;
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
     }
     setPeriods((p) => [...p, data as Period]);
     setPeriodId(data!.id);
     toast.success("Período creado");
+<<<<<<< HEAD
     return true;
+=======
+  }
+
+  async function addLine(itemId: string) {
+    if (!periodId || !projectId || !user) return;
+    const partial = computeLinePartial({ num_elements: 1 });
+    const { data, error } = await supabase
+      .from("metrado_lines")
+      .insert({
+        project_id: projectId,
+        period_id: periodId,
+        item_id: itemId,
+        num_elements: 1,
+        partial,
+        sort_order: lines.length,
+        created_by: user.id,
+      })
+      .select("*")
+      .single();
+    if (error) return toast.error(error.message);
+    setLines((l) => [...l, data as MetradoLine]);
+  }
+
+  async function updateLine(id: string, patch: Partial<MetradoLine>) {
+    const updated = lines.map((l) => (l.id === id ? { ...l, ...patch } : l));
+    const target = updated.find((l) => l.id === id)!;
+    const partial = computeLinePartial(target);
+    const final = { ...target, partial };
+    setLines(updated.map((l) => (l.id === id ? final : l)));
+    await supabase.from("metrado_lines").update({ ...patch, partial }).eq("id", id);
+  }
+
+  async function removeLine(id: string) {
+    setLines((l) => l.filter((x) => x.id !== id));
+    await supabase.from("metrado_lines").delete().eq("id", id);
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
   }
 
   async function saveNarrative(patch: Partial<Period>) {
@@ -294,10 +382,14 @@ function ExpedientePage() {
 
   async function updateDeduction(id: string, patch: Partial<DeductionLine>) {
     setDeductions((ds) => ds.map((d) => (d.id === id ? { ...d, ...patch } : d)));
+<<<<<<< HEAD
     await supabase
       .from("valuation_deductions")
       .update(patch as Database["public"]["Tables"]["valuation_deductions"]["Update"])
       .eq("id", id);
+=======
+    await supabase.from("valuation_deductions").update(patch as any).eq("id", id);
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
   }
 
   async function removeDeduction(id: string) {
@@ -318,7 +410,11 @@ function ExpedientePage() {
 
     setGenerating(true);
     setGenerationError(null);
+<<<<<<< HEAD
     const tid = toast.loading("Generando memoria e informe técnico PDF...");
+=======
+    const tid = toast.loading("Generando expediente PDF...");
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
 
     try {
       const res = await generateExpedienteClientPdf({
@@ -337,7 +433,11 @@ function ExpedientePage() {
       toast.dismiss(tid);
       if (lastUrl) URL.revokeObjectURL(lastUrl);
       setLastUrl(res.url);
+<<<<<<< HEAD
       toast.success("Memoria e informe técnico generados correctamente");
+=======
+      toast.success("Expediente generado correctamente");
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
 
       const link = document.createElement("a");
       link.href = res.url;
@@ -347,10 +447,17 @@ function ExpedientePage() {
       document.body.appendChild(link);
       link.click();
       link.remove();
+<<<<<<< HEAD
     } catch (e: unknown) {
       toast.dismiss(tid);
       const msg = e instanceof Error ? e.message : "Error desconocido al generar el PDF";
       console.error("[MemoriaInforme] generatePdf failed", e);
+=======
+    } catch (e: any) {
+      toast.dismiss(tid);
+      const msg = e?.message ?? "Error desconocido al generar el PDF";
+      console.error("[Expediente] generatePdf failed", e);
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
       setGenerationError(msg);
       toast.error(msg, { duration: 12000, style: { whiteSpace: "pre-line" } });
     } finally {
@@ -360,8 +467,13 @@ function ExpedientePage() {
 
   return (
     <PageLayout
+<<<<<<< HEAD
       title="Memoria valorizada e Informe Técnico"
       description="Asistente para completar la ficha técnica y la memoria valorizada e informe técnico."
+=======
+      title="Expediente Mensual"
+      description="Asistente para generar el expediente mensual de supervisión / valorización."
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
     >
       {/* Stepper */}
       <div className="mb-6 flex flex-wrap items-center gap-2">
@@ -391,6 +503,7 @@ function ExpedientePage() {
           <CardContent className="space-y-4">
             <div>
               <Label>Proyecto</Label>
+<<<<<<< HEAD
               <Select
                 value={projectId}
                 onValueChange={(v) => {
@@ -406,6 +519,13 @@ function ExpedientePage() {
                     <SelectItem key={p.id} value={p.id}>
                       {p.code} — {p.name}
                     </SelectItem>
+=======
+              <Select value={projectId} onValueChange={(v) => { setProjectId(v); setPeriodId(""); }}>
+                <SelectTrigger><SelectValue placeholder="Selecciona un proyecto..." /></SelectTrigger>
+                <SelectContent>
+                  {projects.map((p) => (
+                    <SelectItem key={p.id} value={p.id}>{p.code} — {p.name}</SelectItem>
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
                   ))}
                 </SelectContent>
               </Select>
@@ -413,6 +533,7 @@ function ExpedientePage() {
 
             {projectId && (
               <>
+<<<<<<< HEAD
                 {items.length === 0 && (
                   <div className="rounded-md border border-amber-500/40 bg-amber-500/10 p-3 text-sm">
                     <div className="flex items-start gap-2">
@@ -478,12 +599,36 @@ function ExpedientePage() {
                     />
                   </>
                 )}
+=======
+                <div>
+                  <Label>Períodos existentes</Label>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {periods.length === 0 && <span className="text-sm text-muted-foreground">Sin períodos aún.</span>}
+                    {periods.map((p) => (
+                      <button
+                        key={p.id}
+                        onClick={() => setPeriodId(p.id)}
+                        className={`rounded-md border px-3 py-2 text-left text-sm ${periodId === p.id ? "border-primary bg-primary/10" : "border-border"}`}
+                      >
+                        <div className="font-semibold">Valorización N° {String(p.period_number).padStart(2, "0")}</div>
+                        <div className="text-xs text-muted-foreground">{p.date_from} → {p.date_to}</div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <NewPeriodForm
+                  defaultNumber={(Math.max(0, ...periods.map((p) => p.period_number)) || 0) + 1}
+                  onCreate={createPeriod}
+                />
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
               </>
             )}
           </CardContent>
         </Card>
       )}
 
+<<<<<<< HEAD
       {/* Step 2: Ficha técnica */}
       {step === 2 && project && (
         <Card>
@@ -496,10 +641,86 @@ function ExpedientePage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <FichaTecnicaPanel project={project} onSaved={refresh} />
+=======
+      {/* Step 2: metrados detallados */}
+      {step === 2 && period && (
+        <Card>
+          <CardHeader>
+            <CardTitle>Metrados detallados — Valorización N° {period.period_number}</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex items-end gap-2">
+              <div className="flex-1">
+                <Label>Agregar línea para partida</Label>
+                <Select onValueChange={(v) => addLine(v)}>
+                  <SelectTrigger><SelectValue placeholder="Elige partida..." /></SelectTrigger>
+                  <SelectContent>
+                    {items.map((it) => (
+                      <SelectItem key={it.id} value={it.id}>{it.item_code} — {it.description}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Partida</TableHead>
+                    <TableHead>Ubicación</TableHead>
+                    <TableHead>Descripción</TableHead>
+                    <TableHead className="w-[60px]">N°</TableHead>
+                    <TableHead className="w-[80px]">Largo</TableHead>
+                    <TableHead className="w-[80px]">Ancho</TableHead>
+                    <TableHead className="w-[80px]">Alto</TableHead>
+                    <TableHead className="w-[100px]">Fórmula</TableHead>
+                    <TableHead className="w-[100px] text-right">Parcial</TableHead>
+                    <TableHead></TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {lines.map((l) => {
+                    const it = items.find((i) => i.id === l.item_id);
+                    return (
+                      <TableRow key={l.id}>
+                        <TableCell className="text-xs">{it?.item_code} — {it?.unit}</TableCell>
+                        <TableCell><Input className="h-8" defaultValue={l.group_label ?? ""} onBlur={(e) => updateLine(l.id, { group_label: e.target.value })} placeholder="Calle / tramo" /></TableCell>
+                        <TableCell><Input className="h-8" defaultValue={l.description ?? ""} onBlur={(e) => updateLine(l.id, { description: e.target.value })} /></TableCell>
+                        <TableCell><Input className="h-8" type="number" defaultValue={l.num_elements ?? 1} onBlur={(e) => updateLine(l.id, { num_elements: Number(e.target.value) })} /></TableCell>
+                        <TableCell><Input className="h-8" type="number" defaultValue={l.length ?? ""} onBlur={(e) => updateLine(l.id, { length: e.target.value === "" ? null : Number(e.target.value) })} /></TableCell>
+                        <TableCell><Input className="h-8" type="number" defaultValue={l.width ?? ""} onBlur={(e) => updateLine(l.id, { width: e.target.value === "" ? null : Number(e.target.value) })} /></TableCell>
+                        <TableCell><Input className="h-8" type="number" defaultValue={l.height ?? ""} onBlur={(e) => updateLine(l.id, { height: e.target.value === "" ? null : Number(e.target.value) })} /></TableCell>
+                        <TableCell><Input className="h-8" defaultValue={l.formula ?? ""} placeholder="L*A*H*N" onBlur={(e) => updateLine(l.id, { formula: e.target.value || null })} /></TableCell>
+                        <TableCell className="text-right font-mono">{formatNum(Number(l.partial), 2)}</TableCell>
+                        <TableCell><Button variant="ghost" size="icon" onClick={() => removeLine(l.id)}><Trash2 className="h-4 w-4" /></Button></TableCell>
+                      </TableRow>
+                    );
+                  })}
+                  {lines.length === 0 && (
+                    <TableRow><TableCell colSpan={10} className="text-center text-muted-foreground">Sin metrados aún. Agrega una línea seleccionando una partida.</TableCell></TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </div>
+
+            <div className="rounded-md border bg-muted/30 p-3">
+              <p className="mb-2 text-xs font-semibold text-muted-foreground">Hoja resumen de metrados (período actual)</p>
+              <div className="grid grid-cols-1 gap-1 text-xs md:grid-cols-2">
+                {valTable.filter((r) => r.qtyCurrent > 0).map((r) => (
+                  <div key={r.item.id} className="flex justify-between border-b py-1">
+                    <span className="truncate">{r.item.item_code} {r.item.description}</span>
+                    <span className="font-mono">{formatNum(r.qtyCurrent, 2)} {r.item.unit}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
           </CardContent>
         </Card>
       )}
 
+<<<<<<< HEAD
       {/* Step 3: Memoria valorizada e informe técnico */}
       {step === 3 &&
         period &&
@@ -686,6 +907,31 @@ function ExpedientePage() {
             </div>
           );
         })()}
+=======
+      {/* Step 3: narrativa */}
+      {step === 3 && period && (
+        <Card>
+          <CardHeader><CardTitle>Narrativa técnica del período</CardTitle></CardHeader>
+          <CardContent className="space-y-4">
+            {[
+              { key: "generalidades" as const, label: "Generalidades" },
+              { key: "metas" as const, label: "Metas del proyecto" },
+              { key: "ocurrencias" as const, label: "Ocurrencias y desarrollo de la obra" },
+              { key: "conclusiones" as const, label: "Conclusiones / observaciones del supervisor" },
+            ].map((f) => (
+              <div key={f.key}>
+                <Label>{f.label}</Label>
+                <Textarea
+                  rows={4}
+                  defaultValue={period[f.key] ?? ""}
+                  onBlur={(e) => saveNarrative({ [f.key]: e.target.value } as any)}
+                />
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      )}
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
 
       {/* Step 4: deducciones */}
       {step === 4 && period && (
@@ -694,6 +940,7 @@ function ExpedientePage() {
             <CardTitle>Deducciones del período</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
+<<<<<<< HEAD
             <Button onClick={addDeduction} size="sm">
               <Plus className="mr-1 h-4 w-4" /> Agregar deducción
             </Button>
@@ -706,10 +953,18 @@ function ExpedientePage() {
                   <TableHead></TableHead>
                 </TableRow>
               </TableHeader>
+=======
+            <Button onClick={addDeduction} size="sm"><Plus className="mr-1 h-4 w-4" /> Agregar deducción</Button>
+            <Table>
+              <TableHeader><TableRow>
+                <TableHead>Tipo</TableHead><TableHead>Descripción</TableHead><TableHead className="w-[160px] text-right">Monto</TableHead><TableHead></TableHead>
+              </TableRow></TableHeader>
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
               <TableBody>
                 {deductions.map((d) => (
                   <TableRow key={d.id}>
                     <TableCell>
+<<<<<<< HEAD
                       <Select
                         value={d.deduction_type}
                         onValueChange={(v) =>
@@ -724,10 +979,18 @@ function ExpedientePage() {
                             <SelectItem key={k} value={k}>
                               {lbl}
                             </SelectItem>
+=======
+                      <Select value={d.deduction_type} onValueChange={(v) => updateDeduction(d.id, { deduction_type: v as any })}>
+                        <SelectTrigger className="h-8"><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                          {Object.entries(deductionLabels).map(([k, lbl]) => (
+                            <SelectItem key={k} value={k}>{lbl}</SelectItem>
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
                           ))}
                         </SelectContent>
                       </Select>
                     </TableCell>
+<<<<<<< HEAD
                     <TableCell>
                       <Input
                         className="h-8"
@@ -756,13 +1019,26 @@ function ExpedientePage() {
                       Sin deducciones.
                     </TableCell>
                   </TableRow>
+=======
+                    <TableCell><Input className="h-8" defaultValue={d.description ?? ""} onBlur={(e) => updateDeduction(d.id, { description: e.target.value })} /></TableCell>
+                    <TableCell><Input className="h-8 text-right" type="number" defaultValue={d.amount} onBlur={(e) => updateDeduction(d.id, { amount: Number(e.target.value) })} /></TableCell>
+                    <TableCell><Button variant="ghost" size="icon" onClick={() => removeDeduction(d.id)}><Trash2 className="h-4 w-4" /></Button></TableCell>
+                  </TableRow>
+                ))}
+                {deductions.length === 0 && (
+                  <TableRow><TableCell colSpan={4} className="text-center text-muted-foreground">Sin deducciones.</TableCell></TableRow>
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
                 )}
               </TableBody>
             </Table>
             <div className="flex justify-end text-sm">
+<<<<<<< HEAD
               <span className="font-semibold">
                 Total deducciones: {formatMoney(totalDeductions, currency)}
               </span>
+=======
+              <span className="font-semibold">Total deducciones: {formatMoney(totalDeductions, currency)}</span>
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
             </div>
           </CardContent>
         </Card>
@@ -772,9 +1048,13 @@ function ExpedientePage() {
       {step === 5 && period && project && (
         <div className="space-y-4">
           <Card>
+<<<<<<< HEAD
             <CardHeader>
               <CardTitle>Resumen de Memoria valorizada e Informe Técnico</CardTitle>
             </CardHeader>
+=======
+            <CardHeader><CardTitle>Resumen de valorización</CardTitle></CardHeader>
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
             <CardContent>
               <div className="grid grid-cols-2 gap-3 text-sm md:grid-cols-4">
                 <Stat label="Acumulado anterior" value={formatMoney(t.prev, currency)} />
@@ -782,22 +1062,62 @@ function ExpedientePage() {
                 <Stat label="Acumulado a la fecha" value={formatMoney(t.accum, currency)} />
                 <Stat label="Saldo por valorizar" value={formatMoney(t.balance, currency)} />
                 <Stat label="Total deducciones" value={formatMoney(totalDeductions, currency)} />
+<<<<<<< HEAD
                 <Stat
                   label="MONTO NETO A PAGAR"
                   value={formatMoney(netAmount, currency)}
                   highlight
                 />
+=======
+                <Stat label="MONTO NETO A PAGAR" value={formatMoney(netAmount, currency)} highlight />
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
               </div>
             </CardContent>
           </Card>
 
           <Card>
+<<<<<<< HEAD
+=======
+            <CardHeader><CardTitle>Cuadro de valorización por partida</CardTitle></CardHeader>
+            <CardContent className="overflow-x-auto">
+              <Table>
+                <TableHeader><TableRow>
+                  <TableHead>Ítem</TableHead><TableHead>Descripción</TableHead><TableHead>Und</TableHead>
+                  <TableHead className="text-right">Met. base</TableHead>
+                  <TableHead className="text-right">Ant.</TableHead>
+                  <TableHead className="text-right">Actual</TableHead>
+                  <TableHead className="text-right">Acum.</TableHead>
+                  <TableHead className="text-right">Saldo</TableHead>
+                  <TableHead className="text-right">% Acum</TableHead>
+                </TableRow></TableHeader>
+                <TableBody>
+                  {valTable.map((r) => (
+                    <TableRow key={r.item.id}>
+                      <TableCell className="text-xs">{r.item.item_code}</TableCell>
+                      <TableCell className="max-w-[280px] truncate text-xs">{r.item.description}</TableCell>
+                      <TableCell className="text-xs">{r.item.unit}</TableCell>
+                      <TableCell className="text-right text-xs">{formatNum(Number(r.item.base_quantity), 2)}</TableCell>
+                      <TableCell className="text-right text-xs">{formatNum(r.qtyPrev, 2)}</TableCell>
+                      <TableCell className="text-right text-xs font-semibold">{formatNum(r.qtyCurrent, 2)}</TableCell>
+                      <TableCell className="text-right text-xs">{formatNum(r.qtyAccum, 2)}</TableCell>
+                      <TableCell className="text-right text-xs">{formatNum(r.qtyBalance, 2)}</TableCell>
+                      <TableCell className="text-right text-xs"><Badge variant="outline">{formatNum(r.pctAccum, 1)}%</Badge></TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+
+          <Card>
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
             <CardContent className="flex flex-col gap-3 pt-6 sm:flex-row sm:items-center sm:justify-between">
               <div className="text-sm text-muted-foreground">
                 {generationError ? (
                   <span className="whitespace-pre-line text-destructive">{generationError}</span>
                 ) : isFichaTecnicaIncomplete(project) ? (
                   <span className="text-destructive">
+<<<<<<< HEAD
                     La ficha técnica del proyecto está incompleta. Complétala antes de generar la
                     memoria e informe técnico.
                   </span>
@@ -805,6 +1125,12 @@ function ExpedientePage() {
                   <span>
                     Ficha técnica completa. Listo para generar la memoria e informe técnico.
                   </span>
+=======
+                    La ficha técnica del proyecto está incompleta. Complétala antes de generar el expediente.
+                  </span>
+                ) : (
+                  <span>Ficha técnica completa. Listo para generar el expediente.</span>
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
                 )}
               </div>
               <div className="flex flex-wrap gap-2">
@@ -815,6 +1141,7 @@ function ExpedientePage() {
                 )}
                 {lastUrl && (
                   <Button variant="outline" asChild>
+<<<<<<< HEAD
                     <a href={lastUrl} target="_blank" rel="noreferrer">
                       <Download className="mr-1 h-4 w-4" />
                       Descargar último
@@ -831,6 +1158,14 @@ function ExpedientePage() {
                     <FileDown className="mr-1 h-4 w-4" />
                   )}
                   {generating ? "Generando memoria e informe..." : "Generar Memoria e Informe PDF"}
+=======
+                    <a href={lastUrl} target="_blank" rel="noreferrer"><Download className="mr-1 h-4 w-4" />Descargar último</a>
+                  </Button>
+                )}
+                <Button onClick={generatePdf} disabled={generating || isFichaTecnicaIncomplete(project)}>
+                  {generating ? <Loader2 className="mr-1 h-4 w-4 animate-spin" /> : <FileDown className="mr-1 h-4 w-4" />}
+                  {generating ? "Generando expediente..." : "Generar Expediente PDF"}
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
                 </Button>
               </div>
             </CardContent>
@@ -840,6 +1175,7 @@ function ExpedientePage() {
 
       {/* Nav */}
       <div className="mt-6 flex justify-between">
+<<<<<<< HEAD
         <Button
           variant="outline"
           onClick={() => setStep((s) => Math.max(1, s - 1))}
@@ -851,6 +1187,12 @@ function ExpedientePage() {
           onClick={() => setStep((s) => Math.min(STEPS.length, s + 1))}
           disabled={step === STEPS.length || (step === 1 && (!periodId || items.length === 0))}
         >
+=======
+        <Button variant="outline" onClick={() => setStep((s) => Math.max(1, s - 1))} disabled={step === 1}>
+          <ArrowLeft className="mr-1 h-4 w-4" /> Anterior
+        </Button>
+        <Button onClick={() => setStep((s) => Math.min(STEPS.length, s + 1))} disabled={step === STEPS.length || (step === 1 && !periodId)}>
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
           Siguiente <ArrowRight className="ml-1 h-4 w-4" />
         </Button>
       </div>
@@ -867,6 +1209,7 @@ function Stat({ label, value, highlight }: { label: string; value: string; highl
   );
 }
 
+<<<<<<< HEAD
 function FichaDato({ label, value }: { label: string; value: unknown }) {
   return (
     <div className="rounded-md border bg-muted/20 p-3">
@@ -1003,6 +1346,22 @@ function NewPeriodForm({
       {!validation.ok && (from || to) && (
         <p className="mt-2 text-xs text-destructive">{validation.msg}</p>
       )}
+=======
+function NewPeriodForm({ defaultNumber, onCreate }: { defaultNumber: number; onCreate: (f: { number: number; from: string; to: string }) => void }) {
+  const [number, setNumber] = useState(defaultNumber);
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+  useEffect(() => setNumber(defaultNumber), [defaultNumber]);
+  return (
+    <div className="rounded-md border bg-muted/30 p-3">
+      <p className="mb-2 text-sm font-semibold">Nueva valorización</p>
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-4">
+        <div><Label className="text-xs">N°</Label><Input type="number" value={number} onChange={(e) => setNumber(Number(e.target.value))} /></div>
+        <div><Label className="text-xs">Desde</Label><Input type="date" value={from} onChange={(e) => setFrom(e.target.value)} /></div>
+        <div><Label className="text-xs">Hasta</Label><Input type="date" value={to} onChange={(e) => setTo(e.target.value)} /></div>
+        <div className="flex items-end"><Button className="w-full" disabled={!from || !to} onClick={() => onCreate({ number, from, to })}><Plus className="mr-1 h-4 w-4" />Crear</Button></div>
+      </div>
+>>>>>>> 3afd25791cfd1cdb494b45cffbfbb916e448b357
     </div>
   );
 }
