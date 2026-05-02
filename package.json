@@ -1,0 +1,12 @@
+{
+  "name": "project-ledger",
+  "private": true,
+  "description": "Ejecuta los scripts desde la carpeta de la app o usa estos alias.",
+  "scripts": {
+    "dev": "npm run dev --prefix project-ledger-main",
+    "build": "npm run build --prefix project-ledger-main",
+    "lint": "npm run lint --prefix project-ledger-main",
+    "format": "npm run format --prefix project-ledger-main",
+    "preview": "npm run preview --prefix project-ledger-main"
+  }
+}
