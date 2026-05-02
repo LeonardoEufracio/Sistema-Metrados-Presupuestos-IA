@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
+    "verify:build": "node -e \"import fs from 'node:fs'; const p='.vercel/output/config.json'; if(!fs.existsSync(p)){console.error('Missing',p,'— run npm run build first');process.exit(1)}console.log('OK:',p)\"",
     "build:dev": "vite build --mode development",
     "start": "node .output/server/index.mjs",
     "preview": "vite preview",
